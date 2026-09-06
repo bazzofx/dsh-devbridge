@@ -104,27 +104,103 @@ raw session tokens hashed; access logs minimal; support hard-delete.
 
 ---
 
-## 5. Free vs Premium matrix (v1 proposal)
+## 5. Premium features
 
-| Feature | Free | Premium |
-| --- | --- | --- |
-| Capture -> comment -> send to DSH | Yes | Yes |
-| Local capture history | Last 40 | Unlimited + cloud sync + search + folders |
-| Element screenshots + before/after diff | — | Yes |
-| iframe / shadow-DOM capture | — | Yes (robust multi-fallback selectors) |
-| Selector watchdog (re-verify over time, alert on breakage) | — | Yes |
-| Auto-heal selectors when pages change | — | Yes |
-| Team review boards, statuses, assignees, Jira/GitHub export | — | Yes |
-| Batch multi-element capture + queued send | — | Yes |
-| Scheduled page-watch reports | — | Yes |
-| Playwright/Cypress selector export, CSVs/templates | — | Yes |
-| Multiple/custom Harness endpoints, profiles | — | Yes |
-| AI triage & suggested code fixes (via our stack) | — | Yes |
+> Revised: aligns with the current product — captures are identified by
+> **URL + verified Selector + XPath + visible Text + comment** (HTML is never
+> captured). Premium features build on that identity, never on private page
+> data.
 
-Suggested upgrade hooks in-app: "Selector watchdog", "Team review" and "Cloud
-history" are the strongest value stories; surface a Premium upsell card at the
-moment the user hits a free cap (e.g. history limit) or captures an element
-inside an iframe.
+### Design rules
+
+- The free tier stays fully usable on its own: capture -> comment -> send to
+  DSH, plus the last 40 captures stored locally.
+- Premium is **additive power**, always within the extension's single purpose
+  (element review into DSH). Never silently relicense something users already
+  had for free.
+- Every premium feature is gated by a server-side flag (`premium.<id>`), so a
+  feature can be turned off instantly without a release.
+- Features that need our backend (sync, jobs, team spaces) are naturally
+  premium; features that only need a flag (deep capture, exports) can ship
+  before the backend exists.
+
+### Free vs Premium at a glance
+
+| # | Feature | Free | Premium | Rollout |
+| --- | --- | --- | --- | --- |
+| 1 | Capture -> comment -> send to DSH | Yes | Yes | live |
+| 2 | Local capture history | Last 40, local | — | live |
+| — | Cloud history: unlimited, synced, searchable, folders | — | Yes | P2 |
+| 3 | Selector watchdog: re-verify saved Selector/XPath over time, alert on breakage | — | Yes | **P1** |
+| 4 | Auto-heal: when a selector breaks, propose the nearest matching one | — | Yes | P2 |
+| 5 | Deep capture: iframes + shadow DOM + robust multi-fallback selectors | — | Yes | P2 |
+| 6 | Element screenshots + before/after visual diff on change | — | Yes | P2 |
+| 7 | Team review boards: shared spaces, statuses, assignees, threads | — | Yes | P2 |
+| 8 | One-click issue sync: Jira / GitHub / Linear; CSV/JSON/MD exports | — | Yes | P2 |
+| 9 | Batch multi-element capture + queued send into DSH | — | Yes | P1 |
+| 10 | Scheduled page-watch: report DOM changes of captured elements | — | Yes | P3 |
+| 11 | Multiple / custom Harness endpoints + workspace profiles | — | Yes | P2 |
+| 12 | Playwright / Cypress-ready selector export + template packs | — | Yes | P3 |
+| 13 | AI triage & suggested code fixes mapped to the element (our stack) | — | Yes | P3 |
+
+### Feature details (scope notes)
+
+1. **Selector watchdog (recommended first paid feature).** On a schedule or when
+   the browser opens, the extension re-opens each saved URL and re-verifies the
+   stored Selector/XPath against the live DOM. Broken/stale items are flagged;
+   captures whose selectors still resolve are marked healthy. Builds directly on
+   the stored identity — no HTML dependency. Premium rationale: continuous QA
+   value beyond a one-off capture.
+2. **Auto-heal.** When a Selector/XPath no longer resolves, generate candidates
+   (same tag/text/href, nearest stable ancestor) and let the user accept a
+   repair with a diff preview. Ships with the watchdog; is heuristic by nature —
+   always ask before applying.
+3. **Deep capture.** Extend picking into same-origin iframes and open shadow
+   roots; selectors get fallback lists (id -> data-testid -> tag+class ->
+   anchored ancestor) so they survive SPA re-renders.
+4. **Cloud history.** Upload captures (JSON identity + comment only — no page
+   HTML), sync across devices, search, folders, retention. Requires the
+   account/backend; the natural tier-2 anchor.
+5. **Visual proof.** Element screenshots via `chrome.tabs.captureVisibleTab`
+   (activeTab-scoped, user-triggered) cropped to the element rect; watchdog
+   diffs "before/after" when a page changes.
+6. **Team boards & issue sync.** A capture becomes a work item with
+   status/assignee/thread; export to Jira/GitHub/Linear with the JSON block
+   embedded. Team seats = per-seat pricing.
+7. **Batch + queued send.** Select multiple elements in one picker session and
+   send them as one queued review into DSH; orders-of-magnitude cheaper than
+   one-by-one.
+8. **Page-watch schedules.** Cron-like jobs (hosted or while the browser is
+   open) that watch captured elements and notify on change. Later, usage-based
+   tiering by job count.
+9. **Profiles & exports.** Custom Harness endpoints/ports per workspace profile;
+   copy selectors ready for Playwright/Cypress and project template packs.
+10. **AI layer (later).** Summarize a batch of reviews, suggest which code file
+    renders the captured element, propose fixes, translate between selector
+    styles.
+
+### What we will NOT put behind premium
+
+- Core capture, comment and send-to-DSH (always free).
+- Selector/XPath accuracy and the agent's verification flow (core promise).
+- Privacy guarantees and local-only storage of unsent captures.
+
+### Upgrade hooks (in-app moments)
+
+- Free history cap reached (41st capture) -> upsell Cloud history.
+- Capturing inside an iframe / shadow DOM -> upsell Deep capture.
+- Re-opening an old capture whose selector is stale -> upsell Selector
+  watchdog / Auto-heal.
+- Trying to share a capture with a teammate -> upsell Team boards.
+- Batch selection of 2+ elements -> upsell Batch send.
+- First week: 14-day Premium trial after email verification (no payment
+  method required); downgrade is graceful.
+
+### Phase 1 recommendation
+
+Ship **Selector watchdog** first (P1): smallest backend surface, pure
+extension logic, high perceived value, and it exercises the account +
+entitlement plumbing that every later premium feature needs.
 
 ---
 

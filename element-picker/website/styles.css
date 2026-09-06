@@ -1,0 +1,123 @@
+/* Dev Bridge for DSH — landing page. Brand: white + red. */
+:root {
+  color-scheme: light;
+  --red: #dc2626;
+  --red-dark: #b91c1c;
+  --red-deep: #7f1d1d;
+  --ink: #0b1220;
+  --mut: #667085;
+  --line: #e4e7ec;
+  --bg: #ffffff;
+  --bg-tint: #fdf2f2;
+  --card: #ffffff;
+  --radius: 16px;
+  --shadow: 0 10px 30px rgba(16, 24, 40, 0.08);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: var(--red); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.wrap { max-width: 1060px; margin: 0 auto; padding: 0 22px; }
+h1, h2, h3 { line-height: 1.2; letter-spacing: -0.01em; }
+h1 { font-size: clamp(34px, 6vw, 56px); margin: 14px 0 18px; }
+h2 { font-size: clamp(24px, 3.4vw, 34px); margin: 0 0 8px; }
+h3 { font-size: 18px; margin: 0 0 6px; }
+p { margin: 0 0 12px; }
+kbd { background: #f2f4f7; border: 1px solid #d0d5dd; border-bottom-width: 2px; border-radius: 5px; padding: 0 6px; font: 12px/1.6 ui-monospace, SFMono-Regular, Menlo, monospace; }
+code { background: #fdf2f2; color: var(--red-deep); border-radius: 5px; padding: 1px 6px; font-size: 0.9em; }
+
+/* ---------- header ---------- */
+.site-head { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.head-inner { display: flex; align-items: center; gap: 18px; min-height: 60px; }
+.brand { display: inline-flex; align-items: center; gap: 9px; font-weight: 800; color: var(--ink); }
+.brand:hover { text-decoration: none; }
+.nav { display: flex; gap: 4px; margin-left: auto; }
+.nav a { padding: 7px 11px; border-radius: 8px; color: var(--mut); font-weight: 600; font-size: 14px; }
+.nav a:hover { color: var(--red); background: var(--bg-tint); text-decoration: none; }
+.nav a.active { color: var(--red); }
+.head-cta { margin-left: 6px; white-space: nowrap; }
+
+/* ---------- buttons ---------- */
+.btn { display: inline-block; border: 0; border-radius: 999px; padding: 11px 22px; font: 700 15px/1.2 inherit; cursor: pointer; text-align: center; }
+.btn-lg { padding: 14px 28px; font-size: 16px; }
+.btn-sm { padding: 7px 14px; font-size: 13px; }
+.btn-red { background: var(--red); color: #fff; }
+.btn-red:hover { background: var(--red-dark); text-decoration: none; }
+.btn-ghost { background: #fff; color: var(--ink); border: 1px solid var(--line); }
+.btn-ghost:hover { background: var(--bg-tint); text-decoration: none; }
+.btn-white { background: #fff; color: var(--red-dark); }
+.btn-white:hover { background: #ffe9e9; text-decoration: none; }
+.btn-outline-white { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.6); }
+.btn-outline-white:hover { background: rgba(255,255,255,0.12); text-decoration: none; }
+
+/* ---------- hero ---------- */
+.hero { padding: 72px 0 64px; text-align: center; }
+.hero-icon { margin: 0 auto 22px; filter: drop-shadow(0 12px 24px rgba(220,38,38,0.25)); }
+.kicker { color: var(--mut); font-weight: 700; letter-spacing: 0.04em; font-size: 13px; text-transform: uppercase; }
+.lead { max-width: 660px; margin: 0 auto 26px; font-size: 19px; color: var(--mut); }
+.hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.chips { list-style: none; display: flex; gap: 8px 10px; justify-content: center; flex-wrap: wrap; margin: 30px 0 0; padding: 0; }
+.chips li { background: var(--bg-tint); color: var(--red-deep); border: 1px solid #fecaca; font-size: 13px; font-weight: 600; border-radius: 999px; padding: 6px 13px; }
+
+/* ---------- sections ---------- */
+.section { padding: 64px 0; }
+.section-tint { background: var(--bg-tint); }
+.section-sub { color: var(--mut); margin-bottom: 26px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: 0 1px 2px rgba(16,24,40,0.04); }
+.card h3 { color: var(--red-deep); }
+.card p { margin: 0; color: var(--mut); font-size: 15px; }
+
+/* ---------- steps & code ---------- */
+.steps { max-width: 720px; margin: 0 auto 30px; padding: 0; list-style: none; counter-reset: step; display: grid; gap: 12px; }
+.steps li { counter-increment: step; position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px 16px 58px; color: var(--mut); }
+.steps li b { color: var(--ink); }
+.steps li::before { content: counter(step); position: absolute; left: 16px; top: 15px; width: 30px; height: 30px; border-radius: 50%; background: var(--red); color: #fff; font-weight: 800; display: grid; place-items: center; }
+.code-card { position: relative; max-width: 720px; margin: 0 auto; background: #16181f; color: #e8edf7; border-radius: 14px; overflow: hidden; }
+.code-card pre { margin: 0; padding: 20px 22px; overflow-x: auto; font: 13px/1.7 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.copy-btn { position: absolute; top: 12px; right: 12px; border-radius: 8px !important; }
+.note { text-align: center; color: var(--mut); font-size: 14px; max-width: 720px; margin: 18px auto 0; }
+.note a { font-weight: 600; }
+
+/* ---------- privacy grid ---------- */
+.privacy-grid { margin-top: 8px; }
+.privacy-grid .card { background: #fff; }
+
+/* ---------- support ---------- */
+.support-card { text-align: center; background: linear-gradient(135deg, #dc2626, #991b1b); color: #fff; border-radius: 24px; padding: 48px 30px; box-shadow: 0 20px 50px rgba(220,38,38,0.25); }
+.support-card img { margin: 0 auto 18px; border-radius: 22px; }
+.support-card h2 { color: #fff; }
+.support-msg { max-width: 620px; margin: 0 auto 14px; color: #ffecec; }
+.support-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
+
+/* ---------- footer ---------- */
+.site-foot { border-top: 1px solid var(--line); padding: 26px 0; color: var(--mut); font-size: 14px; }
+.foot-inner { display: flex; gap: 12px; justify-content: space-between; flex-wrap: wrap; }
+.foot-links a { color: var(--mut); }
+.foot-links a:hover { color: var(--red); }
+
+/* ---------- Buy me a coffee (floating, bottom right) ---------- */
+#bmc-wrap {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 999;
+  line-height: 0;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 720px) {
+  .head-inner { flex-wrap: wrap; padding: 10px 16px; }
+  .nav { order: 3; width: 100%; margin: 0; overflow-x: auto; }
+  .hero { padding: 52px 0 46px; }
+  .section { padding: 48px 0; }
+  .foot-inner { flex-direction: column; gap: 6px; text-align: center; }
+}

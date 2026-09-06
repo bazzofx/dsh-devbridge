@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dev Bridge for DSH — send web elements straight into DeepSeek Harness</title>
+<meta name="description" content="Click any element on a web page, write a review, and send its exact selector + XPath straight into your DeepSeek Harness chat. Local-first, private, free. Built by Cyber Samurai." />
+<link rel="icon" type="image/png" href="assets/icon128.png" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap head-inner">
+    <a class="brand" href="#top">
+      <img src="assets/icon32.png" width="26" height="26" alt="Dev Bridge for DSH icon" />
+      <span>Dev&nbsp;Bridge&nbsp;for&nbsp;DSH</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#features">Features</a>
+      <a href="#how">How to use</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#support">Support</a>
+    </nav>
+    <a class="btn btn-red head-cta" id="storeLink" href="#how"><!-- TODO: replace with your Chrome Web Store URL -->Install</a>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <img class="hero-icon" src="assets/icon128.png" width="128" height="128" alt="Dev Bridge for DSH icon" />
+      <p class="kicker">An extension by <a href="https://cybersamurai.co.uk" target="_blank" rel="noopener">Cyber Samurai</a></p>
+      <h1>Dev Bridge for DSH</h1>
+      <p class="lead">Send elements from web pages directly to DeepSeek Harness.<br />Point at the real element, say what you want, and your Harness chat receives the exact selector, XPath and your comment.</p>
+      <div class="hero-actions">
+        <a class="btn btn-red btn-lg" id="storeCta" href="#how"><!-- TODO: Chrome Web Store URL -->Get the extension</a>
+        <a class="btn btn-ghost btn-lg" href="#how">See how it works</a>
+      </div>
+      <ul class="chips">
+        <li>Free to use</li>
+        <li>Local-first &amp; private</li>
+        <li>No account needed</li>
+        <li>No HTML captured</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="section" id="features">
+    <div class="wrap">
+      <h2>Features</h2>
+      <p class="section-sub">Everything the extension does — nothing it shouldn't.</p>
+      <div class="grid cards">
+        <article class="card">
+          <h3>Point &amp; click capture</h3>
+          <p>Hover highlights the real element on the page; one click captures it. No more describing “that button at the bottom”.</p>
+        </article>
+        <article class="card">
+          <h3>Exact references</h3>
+          <p>Every capture carries a verified unique CSS selector, its XPath and the visible text — so the agent knows precisely what you mean.</p>
+        </article>
+        <article class="card">
+          <h3>Tiny payloads</h3>
+          <p>One compact JSON per review — URL, selector, XPath, text, comment. No HTML dumps, no duplication, fewer tokens.</p>
+        </article>
+        <article class="card">
+          <h3>Straight into Harness</h3>
+          <p>Click <em>Send to Harness chat</em> and the capture is typed and submitted into your local chat at 127.0.0.1:3080 for you.</p>
+        </article>
+        <article class="card">
+          <h3>Local-first &amp; private</h3>
+          <p>No network requests, no tracking, no account. Captures stay in your browser’s local storage until you choose to send them.</p>
+        </article>
+        <article class="card">
+          <h3>History &amp; re-send</h3>
+          <p>Every capture is saved in the popup — re-send, copy as JSON, or download as Markdown whenever you like.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW -->
+  <section class="section section-tint" id="how">
+    <div class="wrap">
+      <h2>How to use</h2>
+      <p class="section-sub">From page to Harness chat in four clicks.</p>
+      <ol class="steps">
+        <li><b>Install</b> Dev Bridge for DSH from the Chrome Web Store (or load it unpacked during development).</li>
+        <li><b>Open any website</b> you want to review — your own app, a live page, anything.</li>
+        <li><b>Pick</b> — press <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd>, or click the toolbar icon and choose <em>Pick element on this page</em>. Hover highlights the element; click it.</li>
+        <li><b>Review</b> — type your comment and press <em>Send to Harness chat</em>.</li>
+      </ol>
+      <p class="section-sub">What lands in your Harness chat:</p>
+      <div class="code-card">
+        <button class="btn btn-ghost btn-sm copy-btn" id="copySample" type="button">Copy JSON</button>
+        <pre id="sampleJson">{
+  "url": "https://example.com/page",
+  "selector": "button#submit[data-testid=\"buy-now\"]",
+  "XPath": "//button[@id='submit']",
+  "Text": "Buy Now",
+  "comment": "Move this button above the search bar."
+}</pre>
+      </div>
+      <p class="note">The agent verifies the selector on that URL before touching any code — and asks you if it is ever ambiguous.</p>
+    </div>
+  </section>
+
+  <!-- PRIVACY -->
+  <section class="section" id="privacy">
+    <div class="wrap">
+      <h2>Privacy policy</h2>
+      <p class="section-sub">Short version: this extension collects nothing and transmits nothing over the internet.</p>
+      <div class="grid privacy-grid">
+        <div class="card">
+          <h3>What we collect</h3>
+          <p><strong>Nothing.</strong> No personal data, no browsing history, no analytics, no advertising, no accounts.</p>
+        </div>
+        <div class="card">
+          <h3>Where captures live</h3>
+          <p>Captures stay in <code>chrome.storage.local</code> on your device. They only travel to your locally running DeepSeek Harness at <code>127.0.0.1:3080</code> — your own machine — and only when you press Send.</p>
+        </div>
+        <div class="card">
+          <h3>Permissions, in plain terms</h3>
+          <p><code>activeTab</code> works only while you use the picker; loopback host access reaches only 127.0.0.1:3080; <code>storage</code>, <code>scripting</code> and <code>clipboardWrite</code> power the local list, on-demand picker and Copy button.</p>
+        </div>
+        <div class="card">
+          <h3>Network &amp; third parties</h3>
+          <p>The extension performs no network requests and loads no remote code. No third-party SDKs. Loopback stays on your machine.</p>
+        </div>
+      </div>
+      <p class="note">Full details: <a href="privacy-policy.html">privacy-policy.html</a> (standalone page, ready to host for the Chrome Web Store).</p>
+    </div>
+  </section>
+
+  <!-- SUPPORT -->
+  <section class="section" id="support">
+    <div class="wrap">
+      <div class="support-card">
+        <img src="assets/icon128.png" width="96" height="96" alt="" />
+        <h2>A message from the developer</h2>
+        <p class="support-msg">Hi, I’m Cyber Samurai. I built Dev Bridge for DSH because describing web elements in words wastes everyone’s time — pointing at the real thing is better. The extension is free, local-first, and will stay that way.</p>
+        <p class="support-msg">If it saves you time too, please consider a small donation. It keeps development going and the extension free for everyone.</p>
+        <div class="support-actions">
+          <!-- Donate via Buy me a coffee -->
+          <a class="btn btn-white btn-lg" id="donateBtn" href="https://www.buymeacoffee.com/bazzofx" target="_blank" rel="noopener">Donate — keep it free</a>
+          <a class="btn btn-outline-white btn-lg" href="https://cybersamurai.co.uk" target="_blank" rel="noopener">Visit Cyber Samurai</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-inner">
+    <span>© <span id="year">2026</span> Dev Bridge for DSH · an extension by <a href="https://cybersamurai.co.uk" target="_blank" rel="noopener">Cyber Samurai</a></span>
+    <span class="foot-links"><a href="#privacy">Privacy</a> · <a href="#top">Back to top</a></span>
+  </div>
+</footer>
+
+<!-- Buy me a coffee — floating button, bottom right -->
+<div id="bmc-wrap">
+  <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bazzofx" data-color="#FFDD00" data-emoji=""  data-font="Comic" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
