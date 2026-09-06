@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "HSN Dev Bridge Design",
-  "version": "1.1.2",
-  "description": "Click any element on a web page, write a review, and send its exact selector + XPath straight into your HSN Dev Bridge (DeepSeek Harness) chat.",
+  "name": "Dev Bridge for DSH",
+  "version": "1.1.5",
+  "description": "Click any element on a web page, write a review, and send its exact selector + XPath straight into your DSH chat.",
   "permissions": ["activeTab", "storage", "scripting", "clipboardWrite"],
   "host_permissions": [
     "http://127.0.0.1:3080/*",
@@ -13,7 +13,7 @@
   },
   "action": {
     "default_popup": "popup/popup.html",
-    "default_title": "HSN Dev Bridge Design — element reviews for your Harness chat",
+    "default_title": "Dev Bridge for DSH — element reviews for your Harness chat",
     "default_icon": {
       "16": "icons/icon16.png",
       "32": "icons/icon32.png"
@@ -24,7 +24,7 @@
       "suggested_key": {
         "default": "Alt+Shift+E"
       },
-      "description": "Pick an element on this page and send your review to the HSN Dev Bridge chat"
+      "description": "Pick an element on this page and send your review to the DSH chat"
     }
   },
   "content_scripts": [

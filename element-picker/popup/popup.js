@@ -1,4 +1,4 @@
-/* popup.js — capture list + actions for HSN Dev Bridge Design */
+/* popup.js — capture list + actions for Dev Bridge for DSH */
 (() => {
   'use strict';
 

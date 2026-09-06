@@ -3,6 +3,22 @@
 All notable changes to **HSN Dev Bridge Design** are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), versioned with [SemVer](https://semver.org/).
 
+## [1.1.5] — 2026-02-XX
+
+### Changed
+- Popup subtitle updated to: Send elements from web page directly to Deep Seek Harness.
+
+## [1.1.4] — 2026-02-XX
+
+### Changed
+- Renamed the extension from HSN Dev Bridge Design to **Dev Bridge for DSH**.
+- Chat-target wording in the manifest, popup and docs now says DSH chat.
+
+## [1.1.3] — 2026-02-XX
+
+### Changed
+- Extension icons regenerated in a pure red gradient (was a lighter salmon-red that read orange-ish at small sizes); white crosshair retained.
+
 ## [1.1.2] — 2026-02-XX
 
 ### Changed

@@ -1,9 +1,9 @@
-# Privacy Policy — HSN Dev Bridge Design
+# Privacy Policy — Dev Bridge for DSH
 
 *Developed by Cyber Samurai.*
 
 **Effective date:** 2026-02-XX
-**Applies to:** the Chrome extension *HSN Dev Bridge Design* (version 1.1.2).
+**Applies to:** the Chrome extension *Dev Bridge for DSH* (version 1.1.5).
 
 ## Short version
 

@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Builds a store-ready zip for HSN Dev Bridge Design.
+Builds a store-ready zip for Dev Bridge for DSH.
 
 .DESCRIPTION
 Validates manifest.json, required runtime files, icon dimensions and a
