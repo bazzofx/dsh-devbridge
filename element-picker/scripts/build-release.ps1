@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Builds a store-ready zip for Point & Comment -> DSH.
+Builds a store-ready zip for HSN Dev Bridge Design.
 
 .DESCRIPTION
 Validates manifest.json, required runtime files, icon dimensions and a

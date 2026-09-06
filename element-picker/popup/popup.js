@@ -1,4 +1,4 @@
-/* popup.js — capture list + actions for Point & Comment → DSH */
+/* popup.js — capture list + actions for HSN Dev Bridge Design */
 (() => {
   'use strict';
 
@@ -42,6 +42,18 @@
     } catch {
       return iso || '';
     }
+  }
+
+  /**
+   * Stable identity for a stored capture. New captures carry a unique `id`;
+   * older ones (before ids existed) fall back to a content signature. Always
+   * compare captures with this — chrome.storage returns fresh object
+   * instances on every read, so identity comparison (===) never matches.
+   */
+  function keyOf(c) {
+    if (!c) return '';
+    if (c.id) return 'id:' + c.id;
+    return 'sig:' + [c.url, c.selector, c.capturedAt, c.tag, c.text].join('|');
   }
 
   async function render() {
@@ -88,9 +100,11 @@
       });
       node.querySelector('.act.del').addEventListener('click', async (e) => {
         e.stopPropagation();
-        const list = await getAll();
-        await saveAll(list.filter((c) => c !== capture));
+        const key = keyOf(capture);
+        const next = (await getAll()).filter((c) => keyOf(c) !== key);
+        await saveAll(next);
         await render();
+        status('Removed from history ✓', 'ok', 1500);
       });
 
       frag.appendChild(node);
@@ -134,6 +148,13 @@
     await saveAll([]);
     await render();
     status('Cleared ✓', 'ok', 1500);
+  });
+
+  // Footer credit link — open in a new tab (extension pages cannot navigate themselves).
+  $('#authorLink').addEventListener('click', (e) => {
+    e.preventDefault();
+    chrome.tabs.create({ url: 'https://cybersamurai.co.uk' });
+    window.close();
   });
 
   render();

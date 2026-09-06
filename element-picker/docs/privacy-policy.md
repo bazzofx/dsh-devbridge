@@ -1,7 +1,9 @@
-# Privacy Policy — Point & Comment → DSH
+# Privacy Policy — HSN Dev Bridge Design
+
+*Developed by Cyber Samurai.*
 
 **Effective date:** 2026-02-XX
-**Applies to:** the Chrome extension *Point & Comment → DSH* (version 1.0.0).
+**Applies to:** the Chrome extension *HSN Dev Bridge Design* (version 1.1.2).
 
 ## Short version
 

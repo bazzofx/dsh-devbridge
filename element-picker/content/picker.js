@@ -32,6 +32,10 @@
     return node;
   }
 
+  function uid() {
+    return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+  }
+
   function toast(message, kind) {
     if (!toastEl) {
       toastEl = el('div', 'dshpc-toast');
@@ -129,7 +133,7 @@
 
     const body = el('div', 'dshpc-panel-body');
     const summary = el('div', 'dshpc-summary');
-    summary.appendChild(row('Selector', el('span', 'dshpc-code', capture.selector)));
+    summary.appendChild(row('Selector', el('span', 'dshpc-code dshpc-selector', capture.selector)));
     summary.appendChild(row('XPath', el('span', 'dshpc-code', capture.xpath)));
     summary.appendChild(row('Text', el('span', null, capture.text ? `"${capture.text}"` : '(no text)')));
     const htmlBlock = el('div', 'dshpc-summary-row');
@@ -309,6 +313,7 @@
     hideOverlay();
     const desc = globalThis.DSHSelector.describe(t);
     const capture = {
+      id: uid(),
       capturedAt: new Date().toISOString(),
       url: location.href,
       selector: desc.css,

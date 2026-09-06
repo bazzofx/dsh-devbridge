@@ -1,7 +1,29 @@
 # Changelog
 
-All notable changes to **Point & Comment → DSH** are documented here.
+All notable changes to **HSN Dev Bridge Design** are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), versioned with [SemVer](https://semver.org/).
+
+## [1.1.2] — 2026-02-XX
+
+### Changed
+- Popup footer: 'Cyber Samurai' is now a hyperlink to https://cybersamurai.co.uk (opens in a new tab).
+
+## [1.1.1] — 2026-02-XX
+
+Bugfix release.
+
+### Fixed
+- Popup history: the X (delete) button now reliably removes a capture from the list. Deletion compared stored entries by object identity, which never matches across chrome.storage reads (every read returns fresh instances); it now matches a stable per-capture key - new captures carry a unique id, older ones fall back to a content signature.
+
+## [1.1.0] — 2026-02-XX
+
+Rebranded to **HSN Dev Bridge Design** - developed by Cyber Samurai, red & white theme.
+
+### Changed
+- Renamed the extension to $newName.
+- Rethemed UI (red/white): picker overlay, pill, review panel, popup and icons.
+- Popup footer now credits 'Developed by Cyber Samurai'.
+- Capture contract unchanged (ELEMENT-CAPTURE v1); selectors and Harness delivery logic untouched.
 
 ## [1.0.0] — 2026-02-XX
 

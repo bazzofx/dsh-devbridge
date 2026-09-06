@@ -1,3 +1,5 @@
+/* HSN Dev Bridge Design — popup styles. Brand: red & white. */
+
 :root {
   color-scheme: light;
 }
@@ -28,7 +30,7 @@ body {
 
 .logo {
   font-size: 24px;
-  color: #ff7a18;
+  color: #dc2626;
 }
 
 h1 {
@@ -59,12 +61,12 @@ h1 {
 
 .btn.primary {
   flex: 1;
-  background: #ff7a18;
+  background: #dc2626;
   color: #fff;
 }
 
 .btn.primary:hover {
-  background: #e96a0c;
+  background: #b91c1c;
 }
 
 .btn.ghost {
@@ -111,12 +113,12 @@ kbd {
 }
 
 .status.err {
-  background: #fef3f2;
-  color: #b42318;
+  background: #fef2f2;
+  color: #b91c1c;
 }
 
 .list-wrap {
-  padding: 6px 14px 14px;
+  padding: 6px 14px 10px;
 }
 
 .list {
@@ -125,7 +127,7 @@ kbd {
   padding: 0;
   display: grid;
   gap: 8px;
-  max-height: 420px;
+  max-height: 404px;
   overflow-y: auto;
 }
 
@@ -165,9 +167,9 @@ kbd {
   display: block;
   margin-top: 2px;
   font: 11px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
-  color: #c2410c;
-  background: #fff7ed;
-  border: 1px solid #ffedd5;
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fee2e2;
   border-radius: 5px;
   padding: 2px 6px;
   word-break: break-all;
@@ -206,16 +208,16 @@ kbd {
 
 .item-actions .act.send {
   color: #fff;
-  background: #ff7a18;
-  border-color: #ff7a18;
+  background: #dc2626;
+  border-color: #dc2626;
 }
 
 .item-actions .act.send:hover {
-  background: #e96a0c;
+  background: #b91c1c;
 }
 
 .item-actions .act.del {
-  color: #b42318;
+  color: #b91c1c;
 }
 
 .empty {
@@ -224,4 +226,28 @@ kbd {
   padding: 28px 20px;
   font-size: 12px;
   line-height: 1.7;
+}
+
+.popup-footer {
+  border-top: 1px solid #e4e7ec;
+  margin: 0 14px;
+  padding: 8px 0 10px;
+  text-align: center;
+  color: #98a2b3;
+  font-size: 11px;
+}
+
+.popup-footer b {
+  color: #b91c1c;
+  font-weight: 700;
+}
+
+.popup-footer a {
+  color: #b91c1c;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.popup-footer a:hover {
+  text-decoration: underline;
 }

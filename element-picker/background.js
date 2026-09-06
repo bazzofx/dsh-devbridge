@@ -1,7 +1,7 @@
 /*
- * background.js — MV3 service worker for Point & Comment → DSH.
+ * background.js — MV3 service worker for HSN Dev Bridge Design.
  *
- * Security model (v1.0.0, Chrome Web Store hardening):
+ * Security model (v1.1.2, Chrome Web Store hardening):
  *   - No <all_urls> host permission. The picker is injected under the
  *     `activeTab` grant, which Chrome bestows the moment the user invokes the
  *     extension (toolbar action click or the Alt+Shift+E command). Site

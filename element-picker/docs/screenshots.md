@@ -58,6 +58,6 @@ Shows the payoff: the capture inside the Harness chat at 127.0.0.1:3080.
 
 - No phone mockups, browser-chrome or DevTools panels visible in shots
   (viewport screenshots are fine).
-- Keep text legible; the accent color is orange `#ff7a18`.
+- Keep text legible; the accent color is red `#dc2626`.
 - Name files `screenshot-1-hero.png`, `screenshot-2-review.png`,
   `screenshot-3-harness.png` and upload in that order.

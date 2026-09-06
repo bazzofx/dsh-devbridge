@@ -1,4 +1,6 @@
-# Point & Comment → DSH
+# HSN Dev Bridge Design
+
+*Developed by Cyber Samurai.*
 
 A Chrome extension for **DeepSeek Harness** development: click any element on
 any web page, write a review about it, and send it — with its **exact CSS
@@ -37,7 +39,7 @@ extension talks to your local Harness at `http://127.0.0.1:3080`.
 1. Open `chrome://extensions`.
 2. Enable **Developer mode** (top-right).
 3. **Load unpacked** → select this folder (`element-picker/`).
-4. Pin the “Point & Comment → DSH” icon.
+4. Pin the “HSN Dev Bridge Design” icon.
 
 After editing source files: reload the extension at `chrome://extensions`
 (↻ button) and refresh any open target pages.
@@ -115,7 +117,7 @@ and [`docs/privacy-policy.md`](docs/privacy-policy.md) for details.
 
 ```
 element-picker/
-├── manifest.json            # MV3 manifest (v1.0.0, minimal permissions)
+├── manifest.json            # MV3 manifest (v1.1.2, minimal permissions)
 ├── background.js            # arm picker (activeTab); deliver to Harness tab
 ├── content/
 │   ├── capture-format.js    # capture-block text/JSON — single source of truth

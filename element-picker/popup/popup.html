@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Point &amp; Comment → DSH</title>
+  <title>HSN Dev Bridge Design</title>
   <link rel="stylesheet" href="popup.css" />
 </head>
 <body>
@@ -10,8 +10,8 @@
     <div class="brand">
       <span class="logo">◎</span>
       <div>
-        <h1>Point &amp; Comment → DSH</h1>
-        <p>Element reviews for your DeepSeek Harness chat</p>
+        <h1>HSN Dev Bridge Design</h1>
+        <p>Element reviews for your HSN Dev Bridge (DeepSeek Harness) chat</p>
       </div>
     </div>
   </header>
@@ -26,7 +26,7 @@
 
   <section id="listWrap" class="list-wrap">
     <ul id="list" class="list"></ul>
-    <div id="empty" class="empty">No captures yet.<br/>Pick an element on any page, write your review, and send it here — it lands in the DSH chat with the exact selector &amp; XPath.</div>
+    <div id="empty" class="empty">No captures yet.<br/>Pick an element on any page, write your review, and send it here — it lands in the HSN Dev Bridge chat with the exact selector &amp; XPath.</div>
   </section>
 
   <template id="itemTpl">
@@ -40,13 +40,15 @@
         <div class="item-comment"></div>
       </div>
       <div class="item-actions">
-        <button class="act send" title="Send to Harness chat">Send</button>
+        <button class="act send" title="Send to HSN Dev Bridge chat">Send</button>
         <button class="act copy" title="Copy block to clipboard">Copy</button>
         <button class="act dl" title="Download as .md">.md</button>
         <button class="act del" title="Delete">✕</button>
       </div>
     </li>
   </template>
+
+  <footer class="popup-footer">Developed by <a id="authorLink" href="https://cybersamurai.co.uk" target="_blank" rel="noopener noreferrer">Cyber Samurai</a> · HSN Dev Bridge Design</footer>
 
   <script src="../content/capture-format.js"></script>
   <script src="popup.js"></script>
