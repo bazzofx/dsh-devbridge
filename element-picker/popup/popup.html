@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Point &amp; Comment → DSH</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <span class="logo">◎</span>
+      <div>
+        <h1>Point &amp; Comment → DSH</h1>
+        <p>Element reviews for your DeepSeek Harness chat</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <button id="pickBtn" class="btn primary">◎ Pick element on this page</button>
+    <button id="clearBtn" class="btn ghost" title="Delete all saved captures">Clear</button>
+  </div>
+  <p class="kbd-hint">Shortcut on any page: <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd></p>
+
+  <div id="status" class="status"></div>
+
+  <section id="listWrap" class="list-wrap">
+    <ul id="list" class="list"></ul>
+    <div id="empty" class="empty">No captures yet.<br/>Pick an element on any page, write your review, and send it here — it lands in the DSH chat with the exact selector &amp; XPath.</div>
+  </section>
+
+  <template id="itemTpl">
+    <li class="item">
+      <div class="item-main">
+        <div class="item-head">
+          <span class="item-time"></span>
+          <span class="item-host"></span>
+        </div>
+        <code class="item-selector"></code>
+        <div class="item-comment"></div>
+      </div>
+      <div class="item-actions">
+        <button class="act send" title="Send to Harness chat">Send</button>
+        <button class="act copy" title="Copy block to clipboard">Copy</button>
+        <button class="act dl" title="Download as .md">.md</button>
+        <button class="act del" title="Delete">✕</button>
+      </div>
+    </li>
+  </template>
+
+  <script src="../content/capture-format.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

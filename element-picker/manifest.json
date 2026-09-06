@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "Point & Comment → DSH",
+  "version": "0.1.0",
+  "description": "Click any element on a web page, write a review, and send the exact element reference (CSS selector, XPath, HTML snippet) straight into your DeepSeek Harness chat.",
+  "permissions": ["storage", "scripting", "tabs", "downloads", "clipboardWrite"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Point & Comment — send element reviews to DSH chat"
+  },
+  "commands": {
+    "arm-picker": {
+      "suggested_key": {
+        "default": "Alt+Shift+E"
+      },
+      "description": "Pick an element on this page and send your review to the DSH chat"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://127.0.0.1:3080/*", "http://localhost:3080/*"],
+      "js": ["content/capture-format.js", "content/send.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
