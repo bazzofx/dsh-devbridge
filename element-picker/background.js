@@ -1,7 +1,7 @@
 /*
  * background.js — MV3 service worker for Dev Bridge for DSH.
  *
- * Security model (v1.1.10, Chrome Web Store hardening):
+ * Security model (v1.1.11, Chrome Web Store hardening):
  *   - No <all_urls> host permission. The picker is injected under the
  *     `activeTab` grant, which Chrome bestows the moment the user invokes the
  *     extension (toolbar action click or the Alt+Shift+E command). Site

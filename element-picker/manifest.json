@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Dev Bridge for DSH",
-  "version": "1.1.10",
+  "version": "1.1.11",
   "description": "Click any element on a web page, write a review, and send its exact selector + XPath straight into your DSH chat.",
   "permissions": ["activeTab", "storage", "scripting", "clipboardWrite"],
   "host_permissions": [

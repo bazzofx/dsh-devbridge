@@ -144,12 +144,7 @@
     summary.appendChild(row('Selector', el('span', 'dshpc-code dshpc-selector', capture.selector)));
     summary.appendChild(row('XPath', el('span', 'dshpc-code', capture.xpath)));
     summary.appendChild(row('Text', el('span', null, capture.text ? `"${capture.text}"` : '(no text)')));
-    const htmlBlock = el('div', 'dshpc-summary-row');
-    htmlBlock.appendChild(el('span', null, 'HTML'));
-    const htmlCode = el('pre', 'dshpc-code dshpc-html');
-    htmlCode.textContent = capture.html;
-    htmlBlock.appendChild(htmlCode);
-    summary.appendChild(htmlBlock);
+
     body.appendChild(summary);
 
     const label = el('label', 'dshpc-comment-label', 'Your review / comment for the agent');

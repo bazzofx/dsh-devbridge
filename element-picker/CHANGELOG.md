@@ -3,6 +3,12 @@
 All notable changes to **HSN Dev Bridge Design** are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), versioned with [SemVer](https://semver.org/).
 
+## [1.1.11] — 2026-02-XX
+
+### Changed
+- Removed the HTML box from the review panel UI (HTML is no longer captured).
+- Removed the unused `.dshpc-html` style and remaining HTML references in the
+  extension UI. Selector, XPath and Text references are unchanged.
 ## [1.1.10] — 2026-02-XX
 
 ### Fixed

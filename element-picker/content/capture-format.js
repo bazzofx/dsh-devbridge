@@ -2,9 +2,9 @@
  * capture-format.js - outbound capture shape.
  * Loaded by: picker, send.js, popup.
  * Exposes DSHPC.captureText(capture): ONE pretty-printed JSON object with
- * exactly { url, selector, XPath, Text, comment }.
- * No HTML/markup, no marker, no capturedAt. History-only fields stay stored
- * locally in the popup list and never travel to the chat.
+ * exactly { url, selector, XPath, Text, comment } - nothing else.
+ * History-only fields (capturedAt, id) stay stored locally in the popup list
+ * and never travel to the chat.
  */
 (() => {
   'use strict';

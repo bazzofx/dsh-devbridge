@@ -112,7 +112,7 @@ and [`docs/privacy-policy.md`](docs/privacy-policy.md) for details.
 
 ```
 element-picker/
-├── manifest.json            # MV3 manifest (v1.1.10, minimal permissions)
+├── manifest.json            # MV3 manifest (v1.1.11, minimal permissions)
 ├── background.js            # arm picker (activeTab); deliver to Harness tab
 ├── content/
 │   ├── capture-format.js    # capture-block text/JSON — single source of truth
