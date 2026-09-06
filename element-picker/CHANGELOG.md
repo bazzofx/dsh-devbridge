@@ -3,6 +3,24 @@
 All notable changes to **HSN Dev Bridge Design** are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), versioned with [SemVer](https://semver.org/).
 
+## [1.2.1] — 2026-02-XX
+
+### Changed
+- Popup settings button now shows the `icons/settings.png` gear image instead
+  of the text glyph; the asset is included in the release package.
+## [1.2.0] — 2026-02-XX
+
+### Added
+- Settings page (gear icon in the popup): configurable **Harness port**
+  (default 3080) and a **Master prompt** that is prepended to every capture
+  sent to the Harness chat.
+- Non-default Harness ports supported through one-time `optional_host_permissions`
+  for localhost/127.0.0.1; the sender content script is injected on demand on
+  non-default ports.
+
+### Changed
+- Manifest: added `options_ui` and optional localhost host permissions.
+- Background resolves the Harness tab on the configured port from settings.
 ## [1.1.11] — 2026-02-XX
 
 ### Changed

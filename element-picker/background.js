@@ -1,21 +1,39 @@
 /*
  * background.js — MV3 service worker for Dev Bridge for DSH.
  *
- * Security model (v1.1.11, Chrome Web Store hardening):
+ * Security model (v1.2.1):
  *   - No <all_urls> host permission. The picker is injected under the
  *     `activeTab` grant, which Chrome bestows the moment the user invokes the
  *     extension (toolbar action click or the Alt+Shift+E command). Site
  *     access is therefore strictly user-triggered and temporary.
- *   - The only permanent host access is to the local DeepSeek Harness chat
- *     (127.0.0.1:3080 / localhost:3080), used exclusively to deliver a
- *     capture the user chose to send.
+ *   - Permanent host access is only the local DeepSeek Harness chat on the
+ *     default port (127.0.0.1:3080 / localhost:3080). If the user sets a
+ *     different port in Settings, that specific localhost origin is granted
+ *     through `optional_host_permissions` (requested once, on save).
  *   - After a capture is made, nothing ever touches the reviewed page again:
  *     the payload is plain data routed through extension messaging.
  */
 'use strict';
 
-const HARNESS_URLS = ['http://127.0.0.1:3080/*', 'http://localhost:3080/*'];
-const HARNESS_URL = 'http://127.0.0.1:3080';
+const DEFAULT_PORT = 3080;
+const DSH_HOSTS = ['127.0.0.1', 'localhost'];
+
+function harnessUrlsFor(port) {
+  return DSH_HOSTS.map((h) => `http://${h}:${port}/*`);
+}
+
+function harnessUrlFor(port) {
+  return `http://127.0.0.1:${port}`;
+}
+
+async function getSettings() {
+  const { dshpc_settings = {} } = await chrome.storage.local.get('dshpc_settings');
+  const port = Number(dshpc_settings.port);
+  return {
+    port: Number.isInteger(port) && port >= 1 && port <= 65535 ? port : DEFAULT_PORT,
+    masterPrompt: String(dshpc_settings.masterPrompt || '')
+  };
+}
 
 /* ------------------------------------------------------------ picker arm */
 
@@ -60,7 +78,8 @@ function sleep(ms) {
 }
 
 async function pickHarnessTab() {
-  const tabs = await chrome.tabs.query({ url: HARNESS_URLS });
+  const { port } = await getSettings();
+  const tabs = await chrome.tabs.query({ url: harnessUrlsFor(port) });
   if (tabs.length === 0) return null;
   const focused = tabs.find((t) => t.active);
   return focused || tabs[0];
@@ -69,7 +88,8 @@ async function pickHarnessTab() {
 async function ensureHarnessTab() {
   const existing = await pickHarnessTab();
   if (existing) return { tab: existing, created: false };
-  const created = await chrome.tabs.create({ url: HARNESS_URL });
+  const { port } = await getSettings();
+  const created = await chrome.tabs.create({ url: harnessUrlFor(port) });
   // wait for the page to finish loading
   for (let i = 0; i < 60; i += 1) {
     const info = await chrome.tabs.get(created.id).catch(() => null);
@@ -80,7 +100,9 @@ async function ensureHarnessTab() {
 }
 
 async function deliverToTab(tabId, capture) {
-  // Retry while the content script (or a freshly opened Harness page) is mounting.
+  // Retry while the content script (or a freshly opened Harness page) is
+  // mounting. On non-default ports the manifest content script is not
+  // registered, so send.js is injected on demand below.
   for (let attempt = 0; attempt < 16; attempt += 1) {
     try {
       const resp = await chrome.tabs.sendMessage(tabId, { type: 'dshpc:send-capture', capture });
@@ -104,7 +126,11 @@ async function deliverToTab(tabId, capture) {
     }
     await sleep(700);
   }
-  return { ok: false, status: 'timeout', detail: 'Could not reach the Harness chat tab.' };
+  return {
+    ok: false,
+    status: 'timeout',
+    detail: 'Could not reach the Harness chat tab. If you changed the port, open Settings (gear icon in the popup) and save it there to grant local access.'
+  };
 }
 
 async function handleSend(capture) {

@@ -99,7 +99,11 @@
     const area = findComposer();
     if (!area) return { ok: false, status: 'no-composer', detail: 'Chat composer not found on the Harness page.' };
 
-    const text = globalThis.DSHPC.captureText(capture);
+    // Master prompt from Settings is prepended to every capture we send.
+    const { dshpc_settings = {} } = await chrome.storage.local.get('dshpc_settings');
+    const master = String((dshpc_settings && dshpc_settings.masterPrompt) || '').trim();
+    let text = globalThis.DSHPC.captureText(capture);
+    if (master) text = master + '\n\n' + text;
     area.focus({ preventScroll: false });
     area.scrollIntoView({ block: 'center' });
     setReactValue(area, text);

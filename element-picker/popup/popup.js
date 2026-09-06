@@ -150,6 +150,11 @@
     status('Cleared ✓', 'ok', 1500);
   });
 
+  // Settings (options page): Harness port + master prompt.
+  $('#settingsBtn').addEventListener('click', () => {
+    chrome.runtime.openOptionsPage();
+  });
+
   // Footer credit link — open in a new tab (extension pages cannot navigate themselves).
   $('#authorLink').addEventListener('click', (e) => {
     e.preventDefault();

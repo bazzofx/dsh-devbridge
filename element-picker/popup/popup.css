@@ -251,3 +251,12 @@ kbd {
 .popup-footer a:hover {
   text-decoration: underline;
 }
+
+.btn.icon {
+  padding: 8px 10px;
+  font-size: 14px;
+  line-height: 1.2;
+}
+.btn.icon img {
+  display: block;
+}

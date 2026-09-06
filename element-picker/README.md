@@ -112,7 +112,7 @@ and [`docs/privacy-policy.md`](docs/privacy-policy.md) for details.
 
 ```
 element-picker/
-├── manifest.json            # MV3 manifest (v1.1.11, minimal permissions)
+├── manifest.json            # MV3 manifest (v1.2.1, minimal permissions)
 ├── background.js            # arm picker (activeTab); deliver to Harness tab
 ├── content/
 │   ├── capture-format.js    # capture-block text/JSON — single source of truth
@@ -148,6 +148,17 @@ checksum file). The zip’s top-level folder is the extension root, ready for
 - [`docs/screenshots.md`](docs/screenshots.md) — how to capture store screenshots
 - [`CHANGELOG.md`](CHANGELOG.md)
 
+## Settings
+
+Open **⚙ Settings** from the popup (or right-click the toolbar icon -> Options).
+
+- **Harness port** — DeepSeek Harness normally runs at `127.0.0.1:3080`. If you
+  run it on another port, set it here. Non-default ports ask for a one-time
+  local permission (localhost/127.0.0.1 only); the extension then finds the
+  chat on that port automatically.
+- **Master prompt** — optional text prepended to **every capture** you send to
+  the Harness chat. Useful for standing instructions the agent should always
+  follow (e.g. “verify the selector before editing code”).
 ## Troubleshooting
 
 - **Nothing happens on the hotkey** — confirm the shortcut at
