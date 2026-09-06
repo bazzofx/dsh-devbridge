@@ -1,61 +1,66 @@
-# Point & Comment → DSH (Chrome extension, v0)
+# Point & Comment → DSH
 
-Click **any element on any web page**, write a review about it, and send it
-**straight into your DeepSeek Harness chat** — the chat receives the exact
-CSS selector, XPath, HTML snippet and your comment, so the agent knows
-precisely which element you mean (no more “the button at the bottom of the
-left panel”).
+A Chrome extension for **DeepSeek Harness** development: click any element on
+any web page, write a review about it, and send it — with its **exact CSS
+selector, XPath, HTML snippet and your comment** — straight into your Harness
+chat. No more “the button at the bottom of the left panel”; the agent knows
+precisely which element you mean.
 
-The extension **does not read or upload your browsing data**. Captures are
-stored locally in `chrome.storage.local` and only ever travel to the locally
-running Harness chat at `http://127.0.0.1:3080`.
+> **Privacy first.** The extension makes **no remote network requests**,
+> collects no data, and stores captures only in your browser’s local
+> `chrome.storage`. The only place a capture ever travels to is the locally
+> running Harness chat at `http://127.0.0.1:3080` — and only when you press
+> **Send**.
 
 ---
 
-## Install (load unpacked)
+## Features
 
-1. Open `chrome://extensions` in Chrome/Edge.
+- **Click-to-capture** on any element of any page you are allowed to browse.
+- **Stable, verified selectors** — generated deterministically
+  (`#id` → `data-testid`/`data-cy` → tag+class → shortest unique `nth-of-type`
+  path) and checked against the live DOM before use.
+- **Review panel in the page**: comment → *Send to Harness chat* / *Copy block*
+  / *Save only*.
+- **Direct chat delivery**: the capture is typed into the real Harness composer
+  and submitted for you (or pre-filled if the agent is mid-turn).
+- **Capture list** in the popup: re-send, copy, download as `.md`, delete.
+
+## Install
+
+### Chrome Web Store
+*(Store listing pending publication — see [`docs/store-listing.md`](docs/store-listing.md).)*
+Install from the store link once published. No configuration needed: the
+extension talks to your local Harness at `http://127.0.0.1:3080`.
+
+### Developer mode (local install / development)
+1. Open `chrome://extensions`.
 2. Enable **Developer mode** (top-right).
-3. Click **Load unpacked** and choose this folder:
-   `C:\_deepSeekApps\dev_bridge\element-picker`
-4. Pin the “Point & Comment → DSH” icon for convenience.
+3. **Load unpacked** → select this folder (`element-picker/`).
+4. Pin the “Point & Comment → DSH” icon.
 
-Rebuild after editing any file: open `chrome://extensions`, find the
-extension, click the **reload** (↻) button, then refresh your target pages.
+After editing source files: reload the extension at `chrome://extensions`
+(↻ button) and refresh any open target pages.
 
----
+## Quick start
 
-## Use
+1. Have your DeepSeek Harness GUI open at `http://127.0.0.1:3080`.
+2. On any page press **Alt+Shift+E** — or click the toolbar icon → **Pick
+   element on this page**.
+3. Hover (orange outline) and **click** the element you want to review.
+4. Type your review in the panel and press **Send to Harness chat**.
+5. The capture arrives in your Harness chat; the agent verifies the selector on
+   that URL, finds the code, and applies your comment.
 
-### Pick & review an element
-- Press **Alt+Shift+E** (anywhere), **or** click the extension icon → **Pick
-  element on this page**.
-- A pill appears: *Element picker ON*. **Hover** highlights the element under
-  the cursor (orange outline).
-- **Click** the element you mean → a review panel opens showing the captured
-  `Selector`, `XPath`, visible `Text` and the `HTML` snippet.
-- Type your review/comment, then:
-  - **Send to Harness chat** — the capture is typed into the DSH chat
-    composer (the tab at `127.0.0.1:3080`, opened if needed) and submitted.
-  - **Copy block** — copies the full capture block (Markdown + JSON) so you
-    can paste it anywhere (this chat works).
-  - **Save only** — keeps it in the popup list without sending.
-- `Esc` closes the panel (keep picking) · `Esc` again stops the picker.
-- The picker ignores clicks on the pill/panel itself and only captures page
-  elements in the top-level document (iframes come later).
+`Esc` closes the review panel (keep picking); `Esc` again stops the picker.
 
-### Manage captures
-Click the toolbar icon → popup lists recent captures. Per capture: **Send**
-(to the DSH chat), **Copy**, **.md** (download the block as a file), **✕**
-(delete). **Clear** empties the list.
+## The capture block (contract v1)
 
----
-
-## The capture block (what the agent receives)
+A capture is sent as Markdown (for you) plus JSON (for the agent):
 
 ```html
 <!-- ELEMENT-CAPTURE v1 -->
-Captured: 2026-01-01T10:00:00.000Z
+Captured: 2026-02-01T10:00:00.000Z
 URL: https://example.com/page
 Selector: button#submit[data-testid="buy-now"]
 XPath: //button[@id='submit']
@@ -68,60 +73,91 @@ HTML:
 ```
 
 …followed by the same data as pretty JSON (`marker`, `url`, `selector`,
-`xpath`, `tag`, `text`, `comment`, `html`). The agent should treat a pasted
-block as: *“verify the selector uniquely matches that element on that URL,
-find the code that renders it, then apply the comment.”* Ask first if the
-selector is ambiguous.
+`xpath`, `tag`, `text`, `comment`, `html`).
 
-**Selector strategy** (deterministic, verified unique via
-`document.querySelectorAll`): `#id` → `[data-testid]` / `[data-cy]` /
-`[data-test]` → `tag.class` combo → shortest unique `nth-of-type` path.
+**Agent-side rule:** treat a pasted block as “verify the selector uniquely
+matches that element on that URL, find the code that renders it, then apply
+the comment”. If the selector is ambiguous, ask before editing.
 
----
+The format is stable at `v1`; changes will be additive and versioned.
 
-## Permissions — why
+## Permissions & privacy
 
-| Permission | Reason |
-| --- | --- |
-| `host_permissions: <all_urls>` | pick elements on any site you browse |
-| `scripting` | inject the picker into the active tab on demand |
-| `tabs` | find/open the Harness tab at `127.0.0.1:3080` |
-| `storage` | keep your capture list locally |
-| `downloads` | “Download .md” button |
-| `clipboardWrite` | copy the capture block |
-| content script on `127.0.0.1:3080` | type + submit the capture into the real chat composer |
+| Declared | Why | Data impact |
+| --- | --- | --- |
+| `activeTab` | Inject the picker into the tab you are actively reviewing, only when you invoke the extension (toolbar icon or `Alt+Shift+E`) | Temporary, user-triggered, per-tab access |
+| `host_permissions` for `127.0.0.1:3080` / `localhost:3080` | Deliver captures to your locally running Harness chat | Only on explicit **Send** |
+| `storage` | Keep your capture list on this device (`chrome.storage.local`) | Local only |
+| `scripting` | Inject the on-demand picker scripts | — |
+| `clipboardWrite` | Copy the capture block when you click **Copy** | — |
 
-## How “Send to Harness” works
+**We deliberately do not request:** `<all_urls>` host access, `tabs`,
+`downloads`, or any network permission. The extension performs **no network
+I/O**; `127.0.0.1` is a local address, not the internet.
 
-The extension never scrapes the GUI. The Harness-page content script
-(`content/send.js`) locates the real chat composer `<textarea>` (React
-controlled), sets its value the React-safe way, then clicks the Send button
-(or presses Enter) and confirms the composer cleared. If auto-submit is ever
-blocked (e.g. agent mid-run), it falls back to pre-filling the composer for
-you to press Enter.
+See [`docs/permission-justification.md`](docs/permission-justification.md)
+and [`docs/privacy-policy.md`](docs/privacy-policy.md) for details.
 
----
+## Limitations (current)
 
-## File map
+- Picking works on the top-level document. Cross-origin iframes and shadow-DOM
+  interiors are not captured yet.
+- Elements that re-render without stable hooks fall back to a positional
+  selector; the agent re-verifies before editing.
+- The Harness chat must be reachable at `http://127.0.0.1:3080` (the default
+  `dsh web` address). Configurable Harness address is planned.
+- The picker intentionally does not run on `chrome://` pages, the Chrome Web
+  Store, or other restricted schemes.
+
+## Development
+
+### Layout
 
 ```
 element-picker/
-├── manifest.json            # MV3 manifest
-├── background.js            # arm picker; open Harness tab; route sends
+├── manifest.json            # MV3 manifest (v1.0.0, minimal permissions)
+├── background.js            # arm picker (activeTab); deliver to Harness tab
 ├── content/
-│   ├── capture-format.js    # the capture-block text/JSON (single source)
+│   ├── capture-format.js    # capture-block text/JSON — single source of truth
 │   ├── selector.js          # stable CSS + XPath + HTML snippet extraction
 │   ├── picker.js            # hover highlight, click-capture, review panel
 │   ├── picker.css           # picker UI styles (dshpc- prefixed)
 │   └── send.js              # Harness page: composer insert + submit
-├── popup/                   # capture list UI (Send/Copy/.md/Delete/Pick)
+├── popup/                   # capture list (Send / Copy / .md / Delete)
+├── demo/demo-page.html      # sample page for testing & screenshots
 ├── icons/
+├── docs/                    # store listing, privacy, permissions, screenshots
+├── scripts/build-release.ps1
+├── CHANGELOG.md
 └── README.md
 ```
 
-## Roadmap (post-v0)
+### Build a release zip
 
-- Screenshot region per capture; shadow-DOM + same-origin iframe support.
-- Capture queue file + DSH-side auto-ingest when you want to fire several
-  reviews without pasting.
-- Agent → page highlight handshake (“here is what I changed — re-check”).
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/build-release.ps1
+```
+
+Validates the manifest, required files and icon dimensions, then writes a
+store-ready zip to `releases/element-picker-<version>.zip` (plus a SHA-256
+checksum file). The zip’s top-level folder is the extension root, ready for
+“Load unpacked” or the Chrome Web Store dashboard.
+
+### Related docs
+
+- [`docs/store-listing.md`](docs/store-listing.md) — listing copy & requirements
+- [`docs/permission-justification.md`](docs/permission-justification.md) — review Q&A
+- [`docs/privacy-policy.md`](docs/privacy-policy.md) · `docs/privacy-policy.html`
+- [`docs/screenshots.md`](docs/screenshots.md) — how to capture store screenshots
+- [`CHANGELOG.md`](CHANGELOG.md)
+
+## Troubleshooting
+
+- **Nothing happens on the hotkey** — confirm the shortcut at
+  `chrome://extensions/shortcuts`, or use the toolbar icon → *Pick element*.
+- **“Could not start picker”** — the page type blocks injection (restricted
+  scheme). Pick on a regular `http(s)` page.
+- **Capture sits in the composer unsent** — the agent was mid-turn; press
+  Enter / Send in the Harness tab. The text is already there.
+- **Harness not reachable** — make sure `dsh web` is running on port 3080 and
+  the tab can load `http://127.0.0.1:3080`.

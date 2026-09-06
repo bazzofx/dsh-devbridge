@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Acme SaaS — demo page for Point &amp; Comment → DSH</title>
+<style>
+  :root { color-scheme: light; --brand:#ff7a18; --ink:#0b1220; --mut:#667085; --line:#e4e7ec; --bg:#fbfbfd; }
+  * { box-sizing: border-box; }
+  body { margin:0; font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; color:var(--ink); background:var(--bg); }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+  header.site { display:flex; align-items:center; justify-content:space-between; padding:18px 28px; border-bottom:1px solid var(--line); background:#fff; }
+  .brand { font-weight:800; font-size:18px; } .brand span { color:var(--brand); }
+  nav.site { display:flex; gap:22px; } nav.site a { color:var(--ink); text-decoration:none; font-weight:500; }
+  nav.site a:hover { color:var(--brand); }
+  .btn { display:inline-block; border:0; border-radius:9px; padding:11px 20px; font:700 15px/1 inherit; cursor:pointer; text-decoration:none; }
+  .btn.primary { background:var(--brand); color:#fff; }
+  .btn.ghost { background:#fff; color:var(--ink); border:1px solid var(--line); }
+  section.hero { padding:76px 0 64px; text-align:center; }
+  .kicker { color:var(--brand); font-weight:800; letter-spacing:.06em; text-transform:uppercase; font-size:13px; }
+  h1 { font-size:46px; line-height:1.15; margin:14px 0 16px; letter-spacing:-.02em; }
+  .sub { color:var(--mut); font-size:19px; max-width:640px; margin:0 auto 30px; }
+  .hero .row { display:flex; gap:14px; justify-content:center; }
+  section.features { padding:64px 0; border-top:1px solid var(--line); }
+  .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:30px; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:14px; padding:22px; }
+  .card .ico { font-size:26px; }
+  .card h3 { margin:10px 0 6px; font-size:18px; }
+  .card p { margin:0; color:var(--mut); font-size:14.5px; }
+  section.pricing { padding:20px 0 64px; }
+  table { width:100%; border-collapse:collapse; background:#fff; border:1px solid var(--line); border-radius:12px; overflow:hidden; margin-top:18px; }
+  th,td { text-align:left; padding:13px 18px; border-bottom:1px solid var(--line); font-size:15px; }
+  th { background:#f7f8fa; font-size:13px; text-transform:uppercase; letter-spacing:.05em; color:var(--mut); }
+  tr:last-child td { border-bottom:0; }
+  td.price { font-weight:800; }
+  section.cta { padding:60px 0 72px; }
+  .cta-box { background:linear-gradient(120deg,#0b1220,#20304d); color:#fff; border-radius:20px; padding:44px; text-align:center; }
+  .cta-box h2 { margin:0 0 10px; font-size:28px; }
+  .cta-box p { opacity:.85; margin:0 0 22px; }
+  form.contact { max-width:520px; margin:26px auto 0; background:#fff; border:1px solid var(--line); border-radius:14px; padding:22px; text-align:left; }
+  label { display:block; font-weight:600; font-size:14px; margin:10px 0 6px; }
+  input[type=email], textarea { width:100%; border:1px solid var(--line); border-radius:8px; padding:10px 12px; font:inherit; }
+  footer { border-top:1px solid var(--line); padding:22px 28px; color:var(--mut); font-size:13px; display:flex; justify-content:space-between; }
+  /* stable hooks the picker prefers */
+  [data-testid] { }
+</style>
+</head>
+<body>
+
+<header class="site" data-testid="site-header">
+  <div class="brand">acme<span>.</span>io</div>
+  <nav class="site" data-testid="main-nav">
+    <a href="#features">Features</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="kicker">Productivity suite</div>
+    <h1>Ship faster with <span style="color:var(--brand)">Acme</span></h1>
+    <p class="sub">The all-in-one workspace your team will actually enjoy. Plan, build, and launch from a single place.</p>
+    <div class="row">
+      <button class="btn primary" id="ctaButton" data-testid="cta-start">Get started free</button>
+      <a class="btn ghost" href="#features">See features</a>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="wrap">
+    <h2>Everything your team needs</h2>
+    <div class="cards">
+      <article class="card" data-testid="feature-card" data-feature="planning">
+        <div class="ico">🗺️</div>
+        <h3>Planning</h3>
+        <p>Roadmaps, sprints and boards that stay in sync automatically.</p>
+      </article>
+      <article class="card" data-testid="feature-card" data-feature="automation">
+        <div class="ico">⚙️</div>
+        <h3>Automation</h3>
+        <p>Trigger workflows on any event with a no-code builder.</p>
+      </article>
+      <article class="card" data-testid="feature-card" data-feature="reports">
+        <div class="ico">📊</div>
+        <h3>Reports</h3>
+        <p>Live dashboards your stakeholders actually understand.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <div class="wrap">
+    <h2>Simple pricing</h2>
+    <table data-testid="pricing-table">
+      <thead>
+        <tr><th>Plan</th><th>Price</th><th>Users</th><th>Support</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Starter</td><td class="price">$0</td><td>3</td><td>Community</td></tr>
+        <tr><td>Team</td><td class="price">$12 / user</td><td>Unlimited</td><td>Priority</td></tr>
+        <tr><td>Enterprise</td><td class="price">Contact us</td><td>Unlimited</td><td>Dedicated</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <div class="wrap">
+    <div class="cta-box">
+      <h2>Talk to us</h2>
+      <p>Questions about onboarding, security, or enterprise plans?</p>
+      <form class="contact" data-testid="contact-form">
+        <label for="email">Work email</label>
+        <input type="email" id="email" name="email" placeholder="you@company.com" data-testid="contact-email" />
+        <label for="msg">Message</label>
+        <textarea id="msg" name="msg" rows="3" placeholder="How can we help?" data-testid="contact-message"></textarea>
+        <p style="margin:16px 0 0">
+          <button type="submit" class="btn primary" data-testid="contact-submit">Send message</button>
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Acme Inc. — demo page for the Point &amp; Comment → DSH extension.</span>
+  <span>Press Alt+Shift+E, then click me!</span>
+</footer>
+
+</body>
+</html>

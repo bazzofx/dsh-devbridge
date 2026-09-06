@@ -76,14 +76,15 @@
         const text = globalThis.DSHPC.captureText(capture);
         const blob = new Blob([text], { type: 'text/markdown' });
         const url = URL.createObjectURL(blob);
-        try {
-          await chrome.downloads.download({ url, filename: `element-capture-${(capture.capturedAt || Date.now()).replace(/[^\w-]/g, '_')}.md`, saveAs: false });
-          status('Downloaded .md ✓', 'ok');
-        } catch (err) {
-          status('Download failed: ' + (err && err.message || err), 'err');
-        } finally {
-          setTimeout(() => URL.revokeObjectURL(url), 5000);
-        }
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `element-capture-${String(capture.capturedAt || Date.now()).replace(/[^\w-]/g, '_')}.md`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        status('Downloading .md…', 'ok');
+        // Keep the blob alive long enough for the download to start.
+        setTimeout(() => URL.revokeObjectURL(url), 60000);
       });
       node.querySelector('.act.del').addEventListener('click', async (e) => {
         e.stopPropagation();
@@ -120,7 +121,9 @@
       if (resp && resp.ok) {
         window.close();
       } else {
-        status('Could not start: ' + ((resp && resp.detail) || 'unsupported page'), 'err', 4000);
+        const detail = (resp && (resp.detail || resp.status)) || 'unsupported page';
+        const hint = resp && resp.hint ? '\n' + resp.hint : '';
+        status('Could not start picker: ' + detail + hint, 'err', 5000);
       }
     } catch (err) {
       status('Could not start: ' + (err && err.message || err), 'err', 4000);

@@ -1,16 +1,23 @@
 {
   "manifest_version": 3,
   "name": "Point & Comment → DSH",
-  "version": "0.1.0",
-  "description": "Click any element on a web page, write a review, and send the exact element reference (CSS selector, XPath, HTML snippet) straight into your DeepSeek Harness chat.",
-  "permissions": ["storage", "scripting", "tabs", "downloads", "clipboardWrite"],
-  "host_permissions": ["<all_urls>"],
+  "version": "1.0.0",
+  "description": "Click any element on a web page, write a review, and send its exact selector + XPath straight into your DeepSeek Harness chat.",
+  "permissions": ["activeTab", "storage", "scripting", "clipboardWrite"],
+  "host_permissions": [
+    "http://127.0.0.1:3080/*",
+    "http://localhost:3080/*"
+  ],
   "background": {
     "service_worker": "background.js"
   },
   "action": {
     "default_popup": "popup/popup.html",
-    "default_title": "Point & Comment — send element reviews to DSH chat"
+    "default_title": "Point & Comment — send element reviews to DSH chat",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
   },
   "commands": {
     "arm-picker": {

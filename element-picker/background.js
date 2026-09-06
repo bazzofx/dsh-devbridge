@@ -1,8 +1,16 @@
 /*
  * background.js — MV3 service worker for Point & Comment → DSH.
- * Routes: arm picker on the active tab, and deliver captures to the DSH chat
- * tab (open one if needed) whose content script (content/send.js) does the
- * actual composer insertion + submit.
+ *
+ * Security model (v1.0.0, Chrome Web Store hardening):
+ *   - No <all_urls> host permission. The picker is injected under the
+ *     `activeTab` grant, which Chrome bestows the moment the user invokes the
+ *     extension (toolbar action click or the Alt+Shift+E command). Site
+ *     access is therefore strictly user-triggered and temporary.
+ *   - The only permanent host access is to the local DeepSeek Harness chat
+ *     (127.0.0.1:3080 / localhost:3080), used exclusively to deliver a
+ *     capture the user chose to send.
+ *   - After a capture is made, nothing ever touches the reviewed page again:
+ *     the payload is plain data routed through extension messaging.
  */
 'use strict';
 
@@ -13,10 +21,7 @@ const HARNESS_URL = 'http://127.0.0.1:3080';
 
 async function armPickerInActiveTab() {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  if (!tab || !tab.id) return { ok: false, status: 'no-tab' };
-  if (!/^https?:/i.test(tab.url || '')) {
-    return { ok: false, status: 'unsupported-page', detail: 'Element picking works on http(s) pages only.' };
-  }
+  if (!tab || !tab.id) return { ok: false, status: 'no-tab', detail: 'No active tab found.' };
   return ensurePicker(tab.id);
 }
 
@@ -28,7 +33,7 @@ async function ensurePicker(tabId) {
       return { ok: true };
     }
   } catch {
-    // no receiver yet — inject below
+    // no picker receiver yet — fall through and inject
   }
   try {
     await chrome.scripting.insertCSS({ target: { tabId }, files: ['content/picker.css'] });
@@ -38,7 +43,13 @@ async function ensurePicker(tabId) {
     });
     return { ok: true };
   } catch (err) {
-    return { ok: false, status: 'inject-failed', detail: String((err && err.message) || err) };
+    const msg = String((err && err.message) || err);
+    return {
+      ok: false,
+      status: 'cannot-inject',
+      detail: msg,
+      hint: 'The picker only runs on regular web pages. If a page blocks it, invoke it again from the toolbar icon.'
+    };
   }
 }
 
@@ -52,7 +63,7 @@ async function pickHarnessTab() {
   const tabs = await chrome.tabs.query({ url: HARNESS_URLS });
   if (tabs.length === 0) return null;
   const focused = tabs.find((t) => t.active);
-  return (focused || tabs[0]);
+  return focused || tabs[0];
 }
 
 async function ensureHarnessTab() {
@@ -69,12 +80,12 @@ async function ensureHarnessTab() {
 }
 
 async function deliverToTab(tabId, capture) {
-  // retry while the content script (or page) may still be coming up
+  // Retry while the content script (or a freshly opened Harness page) is mounting.
   for (let attempt = 0; attempt < 16; attempt += 1) {
     try {
       const resp = await chrome.tabs.sendMessage(tabId, { type: 'dshpc:send-capture', capture });
       if (resp && typeof resp === 'object') {
-        // a freshly opened Harness tab may still be mounting its composer — retry
+        // 'no-composer' is retriable: the GUI may still be hydrating its composer.
         if (resp.ok || resp.status !== 'no-composer') return resp;
       }
     } catch {
@@ -98,7 +109,7 @@ async function deliverToTab(tabId, capture) {
 
 async function handleSend(capture) {
   const { tab, created } = await ensureHarnessTab();
-  if (!tab || !tab.id) return { ok: false, status: 'no-harness-tab' };
+  if (!tab || !tab.id) return { ok: false, status: 'no-harness-tab', detail: 'Could not open the Harness chat.' };
   const resp = await deliverToTab(tab.id, capture);
   resp.openedNew = created;
   return resp;
@@ -117,14 +128,14 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
 
   if (msg.type === 'dshpc:arm') {
     armPickerInActiveTab().then(sendResponse, (err) =>
-      sendResponse({ ok: false, status: 'error', detail: String(err && err.message || err) })
+      sendResponse({ ok: false, status: 'error', detail: String((err && err.message) || err) })
     );
     return true;
   }
 
   if (msg.type === 'dshpc:send') {
     handleSend(msg.capture).then(sendResponse, (err) =>
-      sendResponse({ ok: false, status: 'error', detail: String(err && err.message || err) })
+      sendResponse({ ok: false, status: 'error', detail: String((err && err.message) || err) })
     );
     return true;
   }
