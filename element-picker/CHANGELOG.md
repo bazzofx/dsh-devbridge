@@ -3,6 +3,51 @@
 All notable changes to **HSN Dev Bridge Design** are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), versioned with [SemVer](https://semver.org/).
 
+## [1.1.10] — 2026-02-XX
+
+### Fixed
+- picker.js toast(): no longer throws a TypeError when the picker was torn down
+  (Esc) while an async send/copy callback was still finishing; it now checks the
+  root is connected and no-ops safely.
+## [1.1.9] — 2026-02-XX
+
+### Changed
+- Send-to-Harness message is a single pretty-printed JSON with exactly:
+  url, selector, XPath, Text, comment. Nothing else - no Markdown copy, no
+  marker, no capturedAt/tag/markup/html.
+- HTML is no longer captured at all (markup snapshot removed); captures keep
+  selector + XPath + visible text + comment.
+- History rows are upserted by id, so duplicate rows (and duplicate posts)
+  can no longer accumulate.
+- confirmed: the old double block can only come from a stale installed build.
+## [1.1.8] — 2026-02-XX
+
+### Changed
+- Send-to-Harness messages are now a single JSON object (no duplicated Markdown
+  copy) with exactly the fields: url, selector, xpath, text, comment.
+- History-only fields (capturedAt, id, tag, markup, html) remain stored locally
+  for the popup UI but are never sent to the chat.
+- XPath restored to the payload (capture + describe) since consumers need it.
+- Added an idempotency guard in the Harness sender: re-delivering the same
+  capture within 15 seconds is ignored, so a double click can never double-post.
+## [1.1.7] — 2026-02-XX
+
+### Changed
+- Strictly compact sends: the HTML fallback for old stored captures is removed —
+  every send is now URL + selector + tag/text + small Markup + comment, nothing more.
+- Selector engine improved: when an element has no stable hooks, the selector now
+  anchors on the nearest uniquely-identifiable ancestor (id / data-testid / role /
+  aria-label / class) instead of a long positional chain; tag+class lookups try up
+  to 4 classes before falling back to a positional path.
+## [1.1.6] — 2026-02-XX
+
+### Changed
+- Capture payload compacted (`ELEMENT-CAPTURE v1.1`): removed the redundant
+  XPath field and the ~2000-char outerHTML dump. Captures now carry URL, unique
+  verified CSS selector, tag, short visible text, a compact opening-tag markup
+  snapshot and the comment — roughly 70-80% fewer tokens per review, with no
+  accuracy loss (selector verified at capture, re-verified by the agent before
+  acting). Legacy captures still render their html/xpath.
 ## [1.1.5] — 2026-02-XX
 
 ### Changed

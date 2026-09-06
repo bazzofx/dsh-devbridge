@@ -1,50 +1,29 @@
 /*
- * capture-format.js — single source of truth for the capture block shape.
- * Loaded by: picker content script, send.js content script, popup page.
- * Exposes globalThis.DSHPC.captureText(capture) => the full block (Markdown + JSON).
+ * capture-format.js - outbound capture shape.
+ * Loaded by: picker, send.js, popup.
+ * Exposes DSHPC.captureText(capture): ONE pretty-printed JSON object with
+ * exactly { url, selector, XPath, Text, comment }.
+ * No HTML/markup, no marker, no capturedAt. History-only fields stay stored
+ * locally in the popup list and never travel to the chat.
  */
 (() => {
   'use strict';
 
-  const VERSION = 'v1';
+  const VERSION = 'v1.1';
   const MARKER = 'ELEMENT-CAPTURE';
 
+  const esc = (s) => String(s == null ? '' : s).trim();
+
   function captureText(c) {
-    const html = String(c.html || '').slice(0, 2000);
-    const comment = String(c.comment || '').trim();
-
-    const lines = [
-      `<!-- ${MARKER} ${VERSION} -->`,
-      `Captured: ${c.capturedAt || new Date().toISOString()}`,
-      `URL: ${c.url || ''}`,
-      `Selector: ${c.selector || ''}`,
-      `XPath: ${c.xpath || ''}`,
-      `Tag: ${String(c.tag || '').toUpperCase()}  Text: "${c.text || ''}"`,
-      `Comment: ${comment ? comment.replace(/\n/g, '\n          ') : '(none)'}`,
-      'HTML:'
-    ];
-
-    const fence = html.includes('```') ? '````' : '```';
-    lines.push(fence + 'html');
-    lines.push(html);
-    lines.push(fence);
-
-    const md = lines.join('\n');
-
+    // Single pretty JSON: url, selector, XPath, Text, comment - nothing else.
     const payload = {
-      marker: `${MARKER} ${VERSION}`,
-      capturedAt: c.capturedAt || null,
-      url: c.url || null,
-      selector: c.selector || null,
-      xpath: c.xpath || null,
-      tag: c.tag ? String(c.tag).toUpperCase() : null,
-      text: c.text || null,
-      comment: comment || null,
-      html: html || null
+      url: c.url || '',
+      selector: c.selector || '',
+      XPath: c.xpath || '',
+      Text: c.text || '',
+      comment: String(c.comment || '').trim()
     };
-    const json = JSON.stringify(payload, null, 2);
-
-    return md + '\n\n---\n' + json;
+    return JSON.stringify(payload, null, 2);
   }
 
   globalThis.DSHPC = Object.assign(globalThis.DSHPC || {}, {

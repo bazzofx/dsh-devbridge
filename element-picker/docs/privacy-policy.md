@@ -3,7 +3,7 @@
 *Developed by Cyber Samurai.*
 
 **Effective date:** 2026-02-XX
-**Applies to:** the Chrome extension *Dev Bridge for DSH* (version 1.1.5).
+**Applies to:** the Chrome extension *Dev Bridge for DSH* (version 1.1.10).
 
 ## Short version
 

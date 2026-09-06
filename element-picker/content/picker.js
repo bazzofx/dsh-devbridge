@@ -37,7 +37,10 @@
   }
 
   function toast(message, kind) {
-    if (!toastEl) {
+    // The picker may have been torn down (Esc) while an async reply arrives.
+    // Never dereference a removed root/toast element - just no-op.
+    if (!root || !root.isConnected) return;
+    if (!toastEl || !toastEl.isConnected) {
       toastEl = el('div', 'dshpc-toast');
       root.appendChild(toastEl);
     }
@@ -55,6 +58,11 @@
   async function pushCapture(capture) {
     try {
       const { dshpc_captures: list = [] } = await chrome.storage.local.get('dshpc_captures');
+      // Upsert by id: never keep duplicate rows for the same capture.
+      if (capture && capture.id) {
+        const idx = list.findIndex((c) => c && c.id === capture.id);
+        if (idx !== -1) list.splice(idx, 1);
+      }
       list.unshift(capture);
       if (list.length > 200) list.length = 200;
       await chrome.storage.local.set({ dshpc_captures: list });
@@ -320,7 +328,6 @@
       xpath: desc.xpath,
       tag: desc.tag,
       text: desc.text,
-      html: desc.html,
       comment: ''
     };
     openCompose(capture);

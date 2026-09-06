@@ -122,8 +122,19 @@
       : { ok: true, delivered: false, status: 'prefilled', detail: 'Capture is in the composer — press Enter / Send to submit.' };
   }
 
+  // Idempotency guard: ignore a re-delivery of the same capture within 15 s so
+  // a double click/route can never submit the message twice into the chat.
+  let lastSendId = null;
+  let lastSendAt = 0;
+
   chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     if (!msg || msg.type !== 'dshpc:send-capture') return false;
+    const now = Date.now();
+    if (msg.capture && msg.capture.id && msg.capture.id === lastSendId && now - lastSendAt < 15000) {
+      sendResponse({ ok: true, delivered: true, status: 'duplicate-skipped', detail: 'Duplicate send ignored.' });
+      return false;
+    }
+    if (msg.capture && msg.capture.id) { lastSendId = msg.capture.id; lastSendAt = now; }
     deliver(msg.capture).then(sendResponse, (err) =>
       sendResponse({ ok: false, status: 'error', detail: String(err && err.message || err) })
     );

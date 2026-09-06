@@ -4,7 +4,7 @@
 
 A Chrome extension for **DeepSeek Harness** development: click any element on
 any web page, write a review about it, and send it — with its **exact CSS
-selector, XPath, HTML snippet and your comment** — straight into your Harness
+selector, compact markup snapshot and your comment** — straight into your Harness
 chat. No more “the button at the bottom of the left panel”; the agent knows
 precisely which element you mean.
 
@@ -56,33 +56,28 @@ After editing source files: reload the extension at `chrome://extensions`
 
 `Esc` closes the review panel (keep picking); `Esc` again stops the picker.
 
-## The capture block (contract v1)
+## The capture block
 
-A capture is sent as Markdown (for you) plus JSON (for the agent):
+Every capture is sent to the chat as ONE pretty-printed JSON object with
+exactly these fields - no HTML/markup, no marker, no capturedAt:
 
-```html
-<!-- ELEMENT-CAPTURE v1 -->
-Captured: 2026-02-01T10:00:00.000Z
-URL: https://example.com/page
-Selector: button#submit[data-testid="buy-now"]
-XPath: //button[@id='submit']
-Tag: BUTTON  Text: "Buy Now"
-Comment: Move this button above the search bar.
-HTML:
-```html
-<button id="submit" data-testid="buy-now">Buy Now</button>
-```
+```json
+{
+  "url": "https://example.com/page",
+  "selector": "button#submit[data-testid=\"buy-now\"]",
+  "XPath": "//button[@id='submit']",
+  "Text": "Buy Now",
+  "comment": "Move this button above the search bar."
+}
 ```
 
-…followed by the same data as pretty JSON (`marker`, `url`, `selector`,
-`xpath`, `tag`, `text`, `comment`, `html`).
+HTML is never captured or sent; the selector and XPath identify the element.
+History-only fields (capturedAt, id) stay in the popup list locally and never
+travel to the chat.
 
-**Agent-side rule:** treat a pasted block as “verify the selector uniquely
-matches that element on that URL, find the code that renders it, then apply
-the comment”. If the selector is ambiguous, ask before editing.
-
-The format is stable at `v1`; changes will be additive and versioned.
-
+**Agent-side rule:** treat the message as “verify the selector uniquely matches
+that element on that URL, find the code that renders it, then apply the
+comment”. If the selector is ambiguous, ask before editing.
 ## Permissions & privacy
 
 | Declared | Why | Data impact |
@@ -117,11 +112,11 @@ and [`docs/privacy-policy.md`](docs/privacy-policy.md) for details.
 
 ```
 element-picker/
-├── manifest.json            # MV3 manifest (v1.1.5, minimal permissions)
+├── manifest.json            # MV3 manifest (v1.1.10, minimal permissions)
 ├── background.js            # arm picker (activeTab); deliver to Harness tab
 ├── content/
 │   ├── capture-format.js    # capture-block text/JSON — single source of truth
-│   ├── selector.js          # stable CSS + XPath + HTML snippet extraction
+│   ├── selector.js          # stable CSS + compact markup snapshot
 │   ├── picker.js            # hover highlight, click-capture, review panel
 │   ├── picker.css           # picker UI styles (dshpc- prefixed)
 │   └── send.js              # Harness page: composer insert + submit
