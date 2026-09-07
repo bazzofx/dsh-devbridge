@@ -4,99 +4,133 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Privacy Policy — Dev Bridge for DSH</title>
+<meta name="description" content="Privacy policy for the Dev Bridge for DSH Chrome extension: no personal data is collected and nothing is transmitted over the internet." />
+<link rel="icon" type="image/png" href="assets/icon128.png" />
+<link rel="stylesheet" href="styles.css" />
 <style>
-  :root { color-scheme: light; }
-  * { box-sizing: border-box; }
-  body { margin: 0; font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #101828; background: #f7f8fa; }
-  main { max-width: 780px; margin: 0 auto; padding: 40px 24px 80px; }
-  header { border-bottom: 1px solid #e4e7ec; padding-bottom: 16px; margin-bottom: 28px; }
-  h1 { font-size: 26px; margin: 0 0 6px; }
-  h2 { font-size: 19px; margin: 34px 0 10px; }
-  p { margin: 10px 0; }
-  code { background: #eef1f6; border-radius: 5px; padding: 1px 6px; font-size: 0.92em; }
-  ul { padding-left: 22px; }
-  li { margin: 5px 0; }
-  .meta { color: #667085; font-size: 14px; }
-  .callout { background: #fef2f2; border: 1px solid #fee2e2; border-left: 4px solid #dc2626; border-radius: 8px; padding: 12px 16px; }
-  footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #e4e7ec; color: #98a2b3; font-size: 13px; }
+  /* Privacy-policy page: same header/footer as the main site, prose below. */
+  .policy { max-width: 800px; margin: 0 auto; padding: 40px 0 64px; }
+  .policy-head { border-bottom: 1px solid var(--line); padding-bottom: 18px; margin-bottom: 26px; }
+  .policy h1 { font-size: 32px; margin: 0 0 6px; }
+  .meta { color: var(--mut); font-size: 14px; }
+  .policy h2 { margin: 34px 0 8px; color: var(--ink); }
+  .policy p { color: var(--mut); margin: 10px 0; }
+  .policy strong { color: var(--ink); }
+  .policy ul { padding-left: 22px; }
+  .policy li { margin: 6px 0; color: var(--mut); }
+  .policy code { background: #fdf2f2; color: #7f1d1d; }
+  .callout { background: var(--bg-tint); border: 1px solid #fecaca; border-left: 4px solid var(--red); border-radius: 10px; padding: 14px 18px; margin: 20px 0 8px; }
 </style>
 </head>
 <body>
-<main>
-  <header>
-    <h1>Privacy Policy — Dev Bridge for DSH</h1>
-    <p class="meta"><strong>Effective date:</strong> 2026-02-XX &nbsp;·&nbsp; <strong>Applies to:</strong> the Chrome extension <em>Dev Bridge for DSH</em> (version 1.2.1).</p>
-  </header>
 
-  <div class="callout">
-    <strong>Short version:</strong> this extension <strong>collects no personal
-    data, transmits nothing over the internet, and has no analytics or
-    advertising</strong>. Everything you create with it stays on your own
-    computer.
+<header class="site-head">
+  <div class="wrap head-inner">
+    <a class="brand" href="index.html">
+      <img src="assets/icon32.png" width="26" height="26" alt="Dev Bridge for DSH icon" />
+      <span>Dev&nbsp;Bridge&nbsp;for&nbsp;DSH</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#how">How to use</a>
+      <a href="index.html#privacy">Privacy</a>
+      <a href="index.html#support">Support</a>
+    </nav>
+    <!-- TODO: replace with your Chrome Web Store URL -->
+    <a class="btn btn-red head-cta" href="index.html#how">Install</a>
   </div>
+</header>
 
-  <h2>What we collect</h2>
-  <p>Nothing. The extension does not ask for, read, or store personal
-  information, account credentials, browsing history, or any site content
-  off-device.</p>
+<main>
+  <div class="wrap">
+    <article class="policy">
+      <div class="policy-head">
+        <h1>Privacy Policy</h1>
+        <p class="meta"><strong>Effective date:</strong> 2026-02-XX &nbsp;·&nbsp; <strong>Applies to:</strong> the Chrome extension <em>Dev Bridge for DSH</em> (version 1.2.1) by <a href="https://cybersamurai.co.uk" target="_blank" rel="noopener">Cyber Samurai</a>.</p>
+      </div>
 
-  <h2>What happens on your device</h2>
-  <ul>
-    <li><strong>Captures</strong> (element references and your written reviews)
-    are stored in your browser’s local extension storage
-    (<code>chrome.storage.local</code>) on this device. They never leave the
-    device unless you explicitly choose to send or download them.</li>
-    <li><strong>Sending to the Harness chat:</strong> when you press
-    <em>Send to Harness chat</em>, the capture text is inserted into the chat
-    composer of a locally running DeepSeek Harness GUI at
-    <code>http://127.0.0.1:3080</code> — a loopback address on your own
-    machine. This happens only when you press Send, only in your browser, and
-    only toward that local address.</li>
-    <li><strong>Downloads:</strong> the <em>Download .md</em> button saves a
-    capture as a Markdown file to your own downloads folder when you click it.</li>
-  </ul>
+      <div class="callout">
+        <strong>Short version:</strong> this extension <strong>collects no personal
+        data, transmits nothing over the internet, and has no analytics or
+        advertising</strong>. Everything you create with it stays on your own
+        computer.
+      </div>
 
-  <h2>Permissions, in plain terms</h2>
-  <ul>
-    <li><code>activeTab</code> — lets the element picker operate in the tab
-    you are actively reviewing, and only while you use the extension.</li>
-    <li>Host access to <code>127.0.0.1:3080</code> / <code>localhost:3080</code>
-    — your own machine’s loopback, used solely for sending a capture you
-    initiated.</li>
-    <li><code>storage</code>, <code>scripting</code>, <code>clipboardWrite</code>
-    — local list storage, on-demand picker injection, and the Copy-block
-    button.</li>
-  </ul>
+      <h2>What we collect</h2>
+      <p>Nothing. The extension does not ask for, read, or store personal
+      information, account credentials, browsing history, or any site content
+      off-device.</p>
 
-  <h2>Network</h2>
-  <p>The extension performs <strong>no network requests</strong>. No remote
-  code is loaded or executed. Loopback (<code>127.0.0.1</code>) communication
-  stays on your machine.</p>
+      <h2>What happens on your device</h2>
+      <ul>
+        <li><strong>Captures</strong> (element references and your written reviews)
+        are stored in your browser’s local extension storage
+        (<code>chrome.storage.local</code>) on this device. They never leave the
+        device unless you explicitly choose to send or download them.</li>
+        <li><strong>Sending to the Harness chat:</strong> when you press
+        <em>Send to Harness chat</em>, the capture text is inserted into the chat
+        composer of a locally running DeepSeek Harness GUI at
+        <code>http://127.0.0.1:3080</code> (the default port — changeable in the
+        extension’s Settings) — a loopback address on your own machine. This
+        happens only when you press Send, only in your browser, and only toward
+        that local address.</li>
+        <li><strong>Downloads:</strong> the <em>Download .md</em> button saves a
+        capture as a Markdown file to your own downloads folder when you click it.</li>
+      </ul>
 
-  <h2>Third parties</h2>
-  <p>None. No third-party services, SDKs, analytics, or advertising are
-  included.</p>
+      <h2>Permissions, in plain terms</h2>
+      <ul>
+        <li><code>activeTab</code> — lets the element picker operate in the tab
+        you are actively reviewing, and only while you use the extension.</li>
+        <li>Host access to <code>127.0.0.1:3080</code> / <code>localhost:3080</code>
+        — your own machine’s loopback, used solely for sending a capture you
+        initiated. Choosing a different port in Settings asks for access to that
+        localhost origin only.</li>
+        <li><code>storage</code>, <code>scripting</code>, <code>clipboardWrite</code>
+        — local list storage, on-demand picker injection, and the Copy-block
+        button.</li>
+      </ul>
 
-  <h2>Security</h2>
-  <ul>
-    <li>No remote code; the extension is plain Manifest&nbsp;V3 with the
-    default Content Security Policy restrictions.</li>
-    <li>Permissions are kept to the minimum needed (see the extension’s
-    manifest and its permission-justification document).</li>
-    <li>If you uninstall the extension, its local storage is removed by Chrome.</li>
-  </ul>
+      <h2>Network</h2>
+      <p>The extension performs <strong>no network requests</strong>. No remote
+      code is loaded or executed. Loopback (<code>127.0.0.1</code>) communication
+      stays on your machine.</p>
 
-  <h2>Changes</h2>
-  <p>If this policy changes, the updated version will be published at the same
-  URL with a new effective date. Changes will be limited to accurate
-  descriptions of how the extension handles data.</p>
+      <h2>Third parties</h2>
+      <p>None. No third-party services, SDKs, analytics, or advertising are
+      included.</p>
 
-  <h2>Contact</h2>
-  <p>For privacy questions or to report an issue, open an issue on the
-  project’s public repository or contact the developer at the address listed
-  on the store listing for this extension.</p>
+      <h2>Security</h2>
+      <ul>
+        <li>No remote code; the extension is plain Manifest&nbsp;V3 with the
+        default Content Security Policy restrictions.</li>
+        <li>Permissions are kept to the minimum needed (see the extension’s
+        manifest and its permission-justification document).</li>
+        <li>If you uninstall the extension, its local storage is removed by Chrome.</li>
+      </ul>
 
-  <footer>Dev Bridge for DSH · Developed by Cyber Samurai · Privacy Policy · Effective 2026-02-XX</footer>
+      <h2>Changes</h2>
+      <p>If this policy changes, the updated version will be published at the same
+      URL with a new effective date. Changes will be limited to accurate
+      descriptions of how the extension handles data.</p>
+
+      <h2>Contact</h2>
+      <p>For privacy questions or to report an issue, contact the developer via
+      <a href="https://cybersamurai.co.uk" target="_blank" rel="noopener">cybersamurai.co.uk</a>
+      or the address listed on the store listing for this extension.</p>
+    </article>
+  </div>
 </main>
+
+<footer class="site-foot">
+  <div class="wrap foot-inner">
+    <span>© <span id="year">2026</span> Dev Bridge for DSH · an extension by <a href="https://cybersamurai.co.uk" target="_blank" rel="noopener">Cyber Samurai</a></span>
+    <span class="foot-links"><a href="index.html">Home</a> · <a href="index.html#privacy">Privacy</a> · <a href="index.html#top">Back to top</a></span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = String(new Date().getFullYear());
+</script>
 </body>
 </html>
