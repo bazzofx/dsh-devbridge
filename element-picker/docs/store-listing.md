@@ -1,7 +1,7 @@
 # Chrome Web Store — Listing Kit
 
 Everything you paste into the Chrome Web Store developer dashboard
-(https://chrome.google.com/webstore/devconsole) for **Dev Bridge for DSH** v1.2.1.
+(https://chrome.google.com/webstore/devconsole) for **Dev Bridge for DSH** v1.2.3.
 
 > **Before you start**: you need a developer account
 > (one-time **USD 5** registration fee) and a publicly hosted privacy policy —
@@ -100,4 +100,4 @@ Follow [`screenshots.md`](screenshots.md) — it includes the ready-made
 ## 6. After publishing
 
 1. Copy the store URL into `README.md` (“Install → Chrome Web Store”).
-2. Tag the release `v1.2.1` and note the URL in `CHANGELOG.md`.
+2. Tag the release `v1.2.3` and note the URL in `CHANGELOG.md`.

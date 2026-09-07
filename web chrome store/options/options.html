@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Settings — Dev Bridge for DSH</title>
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <img src="../icons/icon32.png" width="26" height="26" alt="" />
+      <div>
+        <h1>Dev Bridge for DSH</h1>
+        <p>Settings</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="content">
+    <section class="card">
+      <h2>Harness connection</h2>
+      <p class="desc">DeepSeek Harness normally runs at <code>127.0.0.1:3080</code>. If you run it on a different port, set it here and the extension will find the chat there instead.</p>
+      <label for="portInput">Port</label>
+      <input type="number" id="portInput" min="1" max="65535" inputmode="numeric" />
+      <p class="hint">Default: 3080 · saving a new port may ask for a one-time local permission</p>
+      <div id="connNote" class="note"></div>
+    </section>
+
+    <section class="card">
+      <h2>Master prompt</h2>
+      <p class="desc">This text is <b>prepended to every capture</b> you send to the Harness chat — great for standing instructions the agent should always follow, e.g. “Verify the selector before editing any code.”</p>
+      <label for="masterInput">Master prompt</label>
+      <textarea id="masterInput" rows="6" placeholder="Always verify the selector uniquely matches the element on that URL before editing code."></textarea>
+      <p class="hint" id="masterCount"></p>
+    </section>
+
+    <div class="actions">
+      <button id="saveBtn" class="btn primary" type="button">Save settings</button>
+      <span id="status" class="status"></span>
+    </div>
+  </main>
+
+  <script src="options.js"></script>
+</body>
+</html>

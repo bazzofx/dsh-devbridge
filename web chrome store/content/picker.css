@@ -1,0 +1,273 @@
+/* Dev Bridge for DSH — picker styles. Brand: red & white. All selectors are namespaced with dshpc- */
+
+html.dshpc-hunting,
+html.dshpc-hunting * {
+  cursor: crosshair !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+.dshpc-root {
+  all: initial;
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  pointer-events: none;
+}
+
+.dshpc-overlay {
+  position: fixed;
+  z-index: 2147483646;
+  pointer-events: none;
+  box-shadow: 0 0 0 2px #dc2626, 0 0 0 6px rgba(220, 38, 38, 0.35);
+  background: rgba(220, 38, 38, 0.1);
+  border-radius: 4px;
+  transition: all 60ms ease;
+}
+
+.dshpc-pill {
+  all: initial;
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px 8px 16px;
+  border-radius: 999px;
+  background: #b91c1c;
+  color: #ffffff;
+  font: 500 13px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+  pointer-events: auto;
+  max-width: 90vw;
+}
+
+.dshpc-pill b {
+  color: #ffd9d9;
+  font-weight: 700;
+}
+
+.dshpc-pill button {
+  all: initial;
+  cursor: pointer;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  font: 700 12px/1 "Segoe UI", sans-serif;
+  padding: 5px 9px;
+}
+
+.dshpc-pill button:hover {
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.dshpc-panel {
+  all: initial;
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  z-index: 2147483647;
+  width: min(680px, calc(100vw - 32px));
+  max-height: min(70vh, 620px);
+  overflow: auto;
+  background: #ffffff;
+  color: #101828;
+  border-radius: 14px;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.4);
+  border: 1px solid #e4e7ec;
+  font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  pointer-events: auto;
+}
+
+.dshpc-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e4e7ec;
+  background: #fff5f5;
+}
+
+.dshpc-panel-title {
+  font-weight: 700;
+  font-size: 13px;
+  color: #7f1d1d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dshpc-panel-url {
+  color: #667085;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  direction: rtl;
+  text-align: left;
+  margin-top: 1px;
+}
+
+.dshpc-panel-close {
+  all: initial;
+  cursor: pointer;
+  font: 700 16px/1 "Segoe UI", sans-serif;
+  color: #b91c1c;
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+
+.dshpc-panel-close:hover {
+  background: #fee2e2;
+  color: #7f1d1d;
+}
+
+.dshpc-panel-body {
+  padding: 14px 16px 16px;
+}
+
+.dshpc-summary {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.dshpc-summary-row {
+  display: grid;
+  grid-template-columns: 74px 1fr;
+  gap: 8px;
+  align-items: baseline;
+  font-size: 12px;
+}
+
+.dshpc-summary-row > span:first-child {
+  color: #667085;
+  font-weight: 600;
+}
+
+.dshpc-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11.5px;
+  background: #f2f4f7;
+  border: 1px solid #e4e7ec;
+  border-radius: 6px;
+  padding: 4px 7px;
+  word-break: break-all;
+}
+
+.dshpc-code.dshpc-selector {
+  background: #fef2f2;
+  border-color: #fee2e2;
+  color: #b91c1c;
+}
+
+
+.dshpc-comment-label {
+  display: block;
+  font-weight: 700;
+  font-size: 13px;
+  color: #0b1220;
+  margin-bottom: 6px;
+}
+
+.dshpc-comment {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 74px;
+  resize: vertical;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font: 13px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #101828;
+  outline: none;
+}
+
+.dshpc-comment:focus {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.18);
+}
+
+.dshpc-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  align-items: center;
+}
+
+.dshpc-btn {
+  all: initial;
+  cursor: pointer;
+  font: 600 13px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  border-radius: 8px;
+  padding: 8px 14px;
+  border: 1px solid transparent;
+}
+
+.dshpc-btn-primary {
+  background: #dc2626;
+  color: #fff;
+}
+
+.dshpc-btn-primary:hover {
+  background: #b91c1c;
+}
+
+.dshpc-btn-primary:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.dshpc-btn-ghost {
+  background: #fff;
+  color: #344054;
+  border-color: #d0d5dd;
+}
+
+.dshpc-btn-ghost:hover {
+  background: #f9fafb;
+}
+
+.dshpc-actions .dshpc-hint {
+  margin-left: auto;
+  color: #98a2b3;
+  font-size: 11.5px;
+}
+
+.dshpc-toast {
+  all: initial;
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2147483647;
+  max-width: 340px;
+  background: #b91c1c;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font: 500 13px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.dshpc-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dshpc-toast.ok {
+  background: #0e7a3d;
+}
+
+.dshpc-toast.err {
+  background: #7f1d1d;
+}

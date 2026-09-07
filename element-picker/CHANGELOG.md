@@ -3,6 +3,15 @@
 All notable changes to **HSN Dev Bridge Design** are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), versioned with [SemVer](https://semver.org/).
 
+## [1.2.3] — 2026-02-XX
+
+### Added
+- "Buy me a coffee" button at the bottom of the popup to help keep the
+  extension free (opens https://www.buymeacoffee.com/bazzofx in a new tab).
+## [1.2.2] — 2026-02-XX
+
+### Changed
+- Popup footer credit link points to https://dev-bridge.cybersamurai.co.uk
 ## [1.2.1] — 2026-02-XX
 
 ### Changed
